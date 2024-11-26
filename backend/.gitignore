@@ -1,4 +1,7 @@
 HELP.md
+# Ignore Firebase Admin SDK JSON file
+src/main/resources/*.json
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
