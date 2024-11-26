@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes TDs/TPs de Machine Learning</title>
+    <link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Style général */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Istok Web', sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* En-tête */
+        .header {
+            background-color: #0CE58E;
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 36px;
+        }
+
+        /* Conteneur principal */
+        .main-container {
+            margin: 40px 20px;
+            text-align: center;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .main-container h2 {
+            font-size: 50px;
+            margin-top: 100px;
+            color: #333;
+        }
+
+        /* Conteneur des colonnes */
+        .chapter-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        /* Style des colonnes */
+        .chapter-container {
+            background-color: #0CE58E;
+            padding: 20px;
+            border-radius: 8px;
+            width: 700px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Boutons des chapitres */
+        .chapter-button {
+            width: 100%;
+            background-color: white;
+            color: #078351;
+            border: none;
+            border-radius: 5px;
+            font-size: 26px;
+            font-weight: bold;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+        }
+
+        .chapter-button:hover {
+            background-color: #e5f8f0;
+            transform: scale(1.03);
+        }
+
+        /* Bouton supprimer */
+        .delete-button {
+            background-color: #FF4C4C;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .delete-button:hover {
+            background-color: #d93a3a;
+        }
+
+        /* Bouton Ajouter */
+        .add-button {
+            margin-top: 20px;
+            background-color: #078351;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+
+        .add-button:hover {
+            background-color: #055d3c;
+        }
+    </style>
+</head>
+<body>
+    <!-- En-tête -->
+    <div class="header">
+        <h1>My E-School</h1>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="main-container">
+        <h2>Les TD&TPs de Machine Learning</h2>
+        <div class="chapter-wrapper">
+            <!-- Colonne TD -->
+            <div class="chapter-container">
+                <button class="chapter-button">
+                    Machine Learning - TD 1
+                    <button class="delete-button">Supprimer</button>
+                </button>
+                <button class="chapter-button">
+                    Machine Learning - TD 2
+                    <button class="delete-button">Supprimer</button>
+                </button>
+                <button class="chapter-button">
+                    Machine Learning - TD 3
+                    <button class="delete-button">Supprimer</button>
+                </button>
+                <button class="add-button">Ajouter</button>
+            </div>
+
+            <!-- Colonne TP -->
+            <div class="chapter-container">
+                <button class="chapter-button">
+                    Machine Learning - TP 1 
+                    <button class="delete-button">Supprimer</button>
+                </button>
+                <button class="chapter-button">
+                    Machine Learning - TP 2
+                    <button class="delete-button">Supprimer</button>
+                </button>
+                <button class="chapter-button">
+                    Machine Learning - TP 3
+                    <button class="delete-button">Supprimer</button>
+                </button>
+                <button class="add-button">Ajouter</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My E-School - Mes Matieres</title>
+    <link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Style général */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-weight: bold;
+}
+
+body {
+    font-family: 'Istok Web', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    background-color: #f9f9f9;
+}
+
+/* En-tête */
+.header {
+    background-color: #0CE58E;
+    width: 100%;
+    padding: 30px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.title {
+    color: white;
+    font-size: 44px;
+    margin: 0;
+}
+
+/* Conteneur principal */
+.main-container {
+    text-align: center;
+    margin-top: 120px;
+}
+
+.main-container h2 {
+    font-size: 40px; /* Agrandir la taille du texte */
+    margin-bottom: 100px;
+}
+
+.main-container h3 {
+    font-size: 40px; /* Agrandir la taille du texte */
+    margin-bottom: 50px;
+}
+
+/* Conteneur des matières */
+.subjects-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 100px; /* Augmenter l'espace entre les cartes */
+    width: 110%; /* Élargir la grille */
+    max-width: 1500px; /* Limiter la largeur totale */
+    margin: 0 auto;
+    height: 75%;
+    max-height: 1000px;
+}
+
+/* Style des matières */
+.subject {
+    background-color: #0CE58E;
+    padding: 30px; /* Augmenter le padding */
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Ajouter une ombre */
+    transform: scale(1.1); /* Agrandir légèrement chaque carte */
+    gap: 25px;
+}
+
+.subject h4 {
+    color: white;
+    font-size: 24px; /* Agrandir la taille du titre de chaque matière */
+    margin-bottom: 20px;
+}
+
+/* Boutons */
+.subject button {
+    background-color: white;
+    color: #078351;
+    border: none;
+    padding: 15px 25px; /* Augmenter la taille des boutons */
+    margin-bottom: 15px;
+    font-size: 18px; /* Agrandir la taille du texte des boutons */
+    border-radius: 8px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.subject button:hover {
+    background-color: #d9f6e5;
+    transform: scale(1.05); /* Légère mise en évidence au survol */
+}
+
+    </style>
+</head>
+
+<body>
+
+    <!-- En-tête -->
+    <header class="header">
+        <h1 class="title">My E-School</h1>
+    </header>
+
+    <!-- Conteneur principal -->
+    <div class="main-container">
+        <h2>Bonjour Etudiant !</h2>
+        <h3>Mes matieres</h3>
+
+        <div class="subjects-container">
+            <div class="subject">
+                <h4>Python</h4>
+                <button onclick="redirectTo('../cours/cours python.html')">mes cours</button>
+                <button onclick="redirectTo('../TDs/TDPs Python.html')">mes TDs/TPs</button>
+                <button onclick="redirectTo('../projets/ProjetPython.html')">Projet à faire</button>
+            </div>
+            <div class="subject">
+                <h4>Java</h4>
+                <button onclick="redirectTo('../cours/cours java.html')">mes cours</button>
+                <button onclick="redirectTo('../TDs/TDPs Java.html')">mes TDs/TPs</button>
+                <button onclick="redirectTo('../projets/ProjetJava.html')">projet à faire</button>
+            </div>
+            <div class="subject">
+                <h4>JavaScript</h4>
+                <button onclick="redirectTo('../cours/cours javascript.html')">mes cours</button>
+                <button onclick="redirectTo('../TDs/TDPs Script.html')">mes TDs/TPs</button>
+                <button onclick="redirectTo('../projets/ProjetScript.html')">projet à faire</button>
+            </div>
+            <div class="subject">
+                <h4>Machine Learning</h4>
+                <button onclick="redirectTo('../cours/cours ML.html')">mes cours</button>
+                <button onclick="redirectTo('../TDs/TDPs ML.html')">mes TDs/TPs</button>
+                <button onclick="redirectTo('../projets/ProjetML.html')">projet à faire</button>
+            </div>
+            <div class="subject">
+                <h4>Big Data</h4>
+                <button onclick="redirectTo('../cours/cours BD.html')">mes cours</button>
+                <button onclick="redirectTo('../TDs/TDPs BD.html')">mes TDs/TPs</button>
+                <button onclick="redirectTo('../projets/ProjetBD.html')">projet à faire</button>
+            </div>
+            <div class="subject">
+                <h4>Cloud Computing</h4>
+                <button onclick="redirectTo('../cours/cours CC.html')">mes cours</button>
+                <button onclick="redirectTo('../TDs/TDPs CC.html')">mes TDs/TPs</button>
+                <button onclick="redirectTo('../projets/ProjetCC.html')">projet à faire</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function redirectTo(page) {
+            // Redirection vers la page spécifique
+            window.location.href = page;
+        }
+    </script>
+</body>
+
+</html>
