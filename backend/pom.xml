@@ -55,7 +55,12 @@
 			<artifactId>firebase-admin</artifactId>
 			<version>9.4.1</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>
