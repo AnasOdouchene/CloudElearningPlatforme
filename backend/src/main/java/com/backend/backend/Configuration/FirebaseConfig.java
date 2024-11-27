@@ -19,6 +19,7 @@ public class FirebaseConfig
                     new FileInputStream("src/main/resources/education-6748b-firebase-adminsdk-niw08-436c1c7289.json");
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setDatabaseUrl("https://education-6748b.firebaseio.com")
                     .build();
             FirebaseApp.initializeApp(options);
         }catch (IOException e){
