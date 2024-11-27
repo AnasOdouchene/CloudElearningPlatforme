@@ -1,12 +1,11 @@
 package Web;
 
-
 import Entities.FileMetadata;
-import Service.BlobStorageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import Service.BlobStorageService;
 
 import java.io.IOException;
 
@@ -21,22 +20,27 @@ public class BlobStorageController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<FileMetadata> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-        String fileUrl = blobStorageService.uploadFile(
-                file.getOriginalFilename(),
-                file.getInputStream(),
-                file.getSize(),
-                file.getContentType()
-        );
+    public ResponseEntity<FileMetadata> uploadFile(@RequestParam("file") MultipartFile file) {
+        try {
+            String fileUrl = blobStorageService.uploadFile(
+                    file.getOriginalFilename(),
+                    file.getInputStream(),
+                    file.getSize(),
+                    file.getContentType()
+            );
 
-        FileMetadata metadata = new FileMetadata(
-                file.getOriginalFilename(),
-                fileUrl,
-                file.getContentType(),
-                file.getSize()
-        );
+            FileMetadata metadata = new FileMetadata(
+                    file.getOriginalFilename(),
+                    fileUrl,
+                    file.getContentType(),
+                    file.getSize()
+            );
 
-        return ResponseEntity.ok(metadata);
+            return ResponseEntity.ok(metadata);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
     }
 
     @DeleteMapping("/delete/{fileName}")
@@ -47,6 +51,7 @@ public class BlobStorageController {
 
     @GetMapping("/url/{fileName}")
     public ResponseEntity<String> getFileUrl(@PathVariable String fileName) {
+        System.out.println("Request received for file: " + fileName);  // Log to confirm method is hit
         String fileUrl = blobStorageService.getFileUrl(fileName);
         if (fileUrl == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("File not found");
@@ -54,6 +59,4 @@ public class BlobStorageController {
         return ResponseEntity.ok(fileUrl);
     }
 
-
 }
-
