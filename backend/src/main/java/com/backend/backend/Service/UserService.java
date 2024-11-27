@@ -1,10 +1,9 @@
-package Service;
+package com.backend.backend.Service;
 
-import Entities.Role;
-import Entities.User;
-import Repositories.UserRepository;
+import com.backend.backend.Entities.Role;
+import com.backend.backend.Entities.User;
+import com.backend.backend.Repositories.UserRepository;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

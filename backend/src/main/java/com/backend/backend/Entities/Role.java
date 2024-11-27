@@ -1,4 +1,4 @@
-package Entities;
+package com.backend.backend.Entities;
 
 public enum Role
 {
