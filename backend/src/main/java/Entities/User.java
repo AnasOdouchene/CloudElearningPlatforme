@@ -1,9 +1,10 @@
 package Entities;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
-
+@Data @AllArgsConstructor @NoArgsConstructor @Builder @ToString
 public class User
 {
     @Id
