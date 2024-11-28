@@ -20,15 +20,14 @@ public class UserController
             @RequestParam String username,
             @RequestParam String email,
             @RequestParam String password,
-
             @RequestParam Role role) {
         try {
             User user = userService.registerUser(
-                    firstName,
-                    lastName,
-                    username,
-                    email,
-                    password,
+                    email,       // Correspond à `email` dans UserService
+                    password,    // Correspond à `password`
+                    firstName,   // Correspond à `firstName`
+                    lastName,    // Correspond à `lastName`
+                    username,    // Correspond à `username`
                     role);
             return ResponseEntity.ok(user);
         } catch (Exception e) {

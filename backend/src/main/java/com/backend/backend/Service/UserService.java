@@ -16,7 +16,7 @@ public class UserService
 {
     private UserRepository userRepository;
     //Méthode pour enregistrer un utilisateur dans Firebase et sauvegarder ses métadonnées localement.
-    public User registerUser(String email , String password ,String firstName, String lastName, String username , Role role)
+    public User registerUser(String email, String password, String firstName, String lastName, String username, Role role)
    {
        //creation d'user sur firebase
        try{UserRecord.CreateRequest request = new UserRecord.CreateRequest().setEmail(email)

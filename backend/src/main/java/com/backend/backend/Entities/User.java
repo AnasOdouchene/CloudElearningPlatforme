@@ -17,10 +17,8 @@ public class User
     private String email;
     @Column(nullable = false)
     private String firstName; // Prénom
-
     @Column(nullable = false)
     private String lastName; // Nom
-
     @Column(nullable = false, unique = true)
     private String username; // Nom d'utilisateur
     @Enumerated(EnumType.STRING)
