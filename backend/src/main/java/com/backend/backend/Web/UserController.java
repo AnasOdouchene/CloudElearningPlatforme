@@ -14,9 +14,21 @@ public class UserController
     private UserService userService;
     // Endpoint pour enregistrer un utilisateur
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestParam String email, @RequestParam String password, @RequestParam Role role) {
+    public ResponseEntity<User> registerUser(
+            @RequestParam String email,
+            @RequestParam String password,
+            @RequestParam String firstName,
+            @RequestParam String lastName,
+            @RequestParam String username,
+            @RequestParam Role role) {
         try {
-            User user = userService.registerUser(email, password, role);
+            User user = userService.registerUser(
+                    email,
+                    password,
+                    firstName,
+                    lastName,
+                    username,
+                    role);
             return ResponseEntity.ok(user);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(null);

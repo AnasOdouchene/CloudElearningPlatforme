@@ -16,8 +16,9 @@ public class UserService
 {
     private UserRepository userRepository;
     //Méthode pour enregistrer un utilisateur dans Firebase et sauvegarder ses métadonnées localement.
-    public User registerUser(String email , String password , Role role)
+    public User registerUser(String email , String password ,String firstName, String lastName, String username , Role role)
    {
+       //creation d'user sur firebase
        try{UserRecord.CreateRequest request = new UserRecord.CreateRequest().setEmail(email)
                .setPassword(password).setEmailVerified(false); // Par défaut, l'e-mail n'est pas vérifié
        UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
@@ -25,6 +26,9 @@ public class UserService
        User user = User.builder()
                .firebaseuid(userRecord.getUid()) // UID généré par Firebase
                .email(email)
+               .firstName(firstName)
+               .lastName(lastName)
+               .username(username)
                .role(role)
                .build();
        return userRepository.save(user);}catch (Exception e){
