@@ -58,5 +58,9 @@ public class UserService
             throw new RuntimeException("Erreur lors de la suppression de l'utilisateur : " + e.getMessage());
         }
     }
+    public Optional<User> getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
 
 }

@@ -3,9 +3,12 @@ package com.backend.backend.Web;
 import com.backend.backend.Entities.Role;
 import com.backend.backend.Entities.User;
 import com.backend.backend.Service.UserService;
+import com.google.firebase.auth.FirebaseAuth;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -53,4 +56,27 @@ public class UserController
             return ResponseEntity.badRequest().build();
         }
     }
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
+        try {
+            // Étape 1: Trouvez l'utilisateur par son username
+            Optional<User> optionalUser = userService.getUserByUsername(username);
+            if (optionalUser.isEmpty()) {
+                return ResponseEntity.status(404).body("Utilisateur non trouvé");
+            }
+            User user = optionalUser.get();
+
+            // Étape 2: Authentifiez avec Firebase
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            try {
+                firebaseAuth.verifyIdToken(firebaseAuth.createCustomToken(user.getFirebaseuid()));
+                return ResponseEntity.ok("Connexion réussie !");
+            } catch (Exception e) {
+                return ResponseEntity.status(401).body("Échec d'authentification : " + e.getMessage());
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erreur : " + e.getMessage());
+        }
+    }
+
 }
