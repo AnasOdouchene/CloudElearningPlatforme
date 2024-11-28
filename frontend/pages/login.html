@@ -16,39 +16,43 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f4f4f4;
+            background: linear-gradient(to right, #0CE58E, #078351);
         }
 
         .login-container {
             width: 400px;
-            padding: 20px;
+            padding: 30px;
             background: white;
-            border-radius: 8px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
             text-align: center;
         }
 
         .login-container h2 {
             margin-bottom: 20px;
+            font-size: 28px;
+            color: #078351;
         }
 
         input {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-bottom: 20px;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 6px;
+            font-size: 16px;
         }
 
         button {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background-color: #0CE58E;
             border: none;
             color: white;
-            font-size: 16px;
-            border-radius: 4px;
+            font-size: 18px;
+            border-radius: 6px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
         button:hover {
@@ -56,15 +60,23 @@
         }
 
         #responseMessage {
-            margin-top: 10px;
+            margin-top: 15px;
             font-size: 14px;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
         }
     </style>
 </head>
 
 <body>
 <div class="login-container">
-    <h2>Connexion</h2>
+    <h2>Connexion à E-School</h2>
     <form id="loginForm">
         <input type="email" id="email" placeholder="E-mail" required>
         <input type="password" id="password" placeholder="Mot de passe" required>
@@ -74,6 +86,7 @@
 </div>
 
 <script>
+    // Configuration Firebase
     const firebaseConfig = {
         apiKey: "VOTRE_API_KEY",
         authDomain: "VOTRE_AUTH_DOMAIN",
@@ -86,6 +99,7 @@
     const app = firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
+    // Gestion du formulaire de connexion
     document.getElementById('loginForm').addEventListener('submit', async (event) => {
         event.preventDefault();
         const email = document.getElementById('email').value;
@@ -93,9 +107,11 @@
         const responseMessage = document.getElementById('responseMessage');
 
         try {
-            const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+            // Authentification Firebase
+            const userCredential = await auth.signInWithEmailAndPassword(email, password);
             const idToken = await userCredential.user.getIdToken();
 
+            // Envoi du token au backend
             const response = await fetch('http://localhost:8080/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -104,14 +120,14 @@
 
             if (response.ok) {
                 const userData = await response.json();
-                responseMessage.style.color = "green";
+                responseMessage.className = "success";
                 responseMessage.textContent = `Bienvenue, ${userData.firstName}! Connexion réussie.`;
             } else {
-                responseMessage.style.color = "red";
+                responseMessage.className = "error";
                 responseMessage.textContent = "Erreur lors de la connexion.";
             }
         } catch (error) {
-            responseMessage.style.color = "red";
+            responseMessage.className = "error";
             responseMessage.textContent = `Erreur : ${error.message}`;
         }
     });
