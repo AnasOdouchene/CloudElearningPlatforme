@@ -15,19 +15,20 @@ public class UserController
     // Endpoint pour enregistrer un utilisateur
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(
-            @RequestParam String email,
-            @RequestParam String password,
             @RequestParam String firstName,
             @RequestParam String lastName,
             @RequestParam String username,
+            @RequestParam String email,
+            @RequestParam String password,
+
             @RequestParam Role role) {
         try {
             User user = userService.registerUser(
-                    email,
-                    password,
                     firstName,
                     lastName,
                     username,
+                    email,
+                    password,
                     role);
             return ResponseEntity.ok(user);
         } catch (Exception e) {
