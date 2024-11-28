@@ -4,6 +4,7 @@ import com.backend.backend.Entities.Role;
 import com.backend.backend.Entities.User;
 import com.backend.backend.Service.UserService;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.UserRecord;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -58,18 +59,16 @@ public class UserController
         }
     }
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestParam String email, @RequestParam String password) {
+    public ResponseEntity<Object> login(@RequestParam String idToken) {
         try {
-            // Étape 1 : Authentifier l'utilisateur avec Firebase
+            // Étape 1 : Vérifier le token envoyé par le frontend
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-            UserRecord userRecord = firebaseAuth.getUserByEmail(email);
+            FirebaseToken decodedToken = firebaseAuth.verifyIdToken(idToken);
 
-            if (userRecord == null) {
-                return ResponseEntity.status(404).body("Utilisateur non trouvé dans Firebase.");
-            }
+            // Étape 2 : Extraire les informations utilisateur depuis le token
+            String firebaseUid = decodedToken.getUid();
+            Optional<User> optionalUser = userService.getUserByFirebaseUid(firebaseUid);
 
-            // Étape 2 : Vérifier les métadonnées localement
-            Optional<User> optionalUser = userService.getUserByFirebaseUid(((UserRecord) userRecord).getUid());
             if (optionalUser.isEmpty()) {
                 return ResponseEntity.status(404).body("Utilisateur non trouvé localement.");
             }
@@ -82,6 +81,7 @@ public class UserController
             return ResponseEntity.status(401).body("Erreur d'authentification : " + e.getMessage());
         }
     }
+
 
 
 }
