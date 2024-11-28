@@ -4,128 +4,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My E-School - Connexion</title>
-    <link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+    <title>Connexion - My E-School</title>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"></script>
     <style>
-        /* Style général */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-weight: bold;
-        }
-
+        /* Styles de base */
         body {
-            font-family: 'Istok Web', sans-serif;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 60vh;
-        }
-
-        /* En-tête */
-        .header {
-            background-color: #0CE58E;
-            width: 100%;
-            padding: 30px;
-            text-align: center;
-            position: absolute;
-            top: 0;
-        }
-
-        .title {
-            color: white;
-            font-size: 44px;
+            height: 100vh;
             margin: 0;
+            background-color: #f4f4f4;
         }
 
-        /* Conteneur du formulaire */
-        .register-container {
-            background-color: white;
-            padding: 30px;
-            text-align: center;
-            max-width: 600px;
-            width: 100%;
-            margin-top: 450px;
-            align-items: center;
-            /* Ajustement pour éviter la superposition avec l'en-tête */
-        }
-
-        .register-container h2 {
-            margin-bottom: 70px;
-            font-size: 60px;
-            color: black;
-        }
-
-        /* Formulaire */
-        .register-form {
-            display: flex;
-            flex-direction: column;
-            gap: 50px;
-        }
-
-        .input-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="password"] {
-            padding: 15px;
-            font-size: 26px;
-            border: 1px ;
-            border-radius: 5px;
-            width: 100%;
-            box-sizing: border-box;
-            background-color: #D9D9D9;
-            color: #078351;
-            font: bolder;
-            margin-bottom: 20px;
-            
-        }
-        input[type="email"]::placeholder,
-        input[type="password"]::placeholder {
-            color: #078351;
-            opacity: 1;
-        }
-
-
-        /* Bouton de soumission */
-        button[type="submit"] {
-            background-color: #078351;
-            color: white;
-            font-size: 40px;
-            padding: 8px 25px;
-            border: none;
+        .login-container {
+            width: 400px;
+            padding: 20px;
+            background: white;
             border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            width: 70%;
-            max-width: 600px;
-            margin: 0 auto;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
-        button[type="submit"]:hover {
+        .login-container h2 {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
             background-color: #0CE58E;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #078351;
+        }
+
+        #responseMessage {
+            margin-top: 10px;
+            font-size: 14px;
         }
     </style>
 </head>
 
 <body>
-    <header class="header">
-        <h1 class="title">My E-School</h1>
-    </header>
+<div class="login-container">
+    <h2>Connexion</h2>
+    <form id="loginForm">
+        <input type="email" id="email" placeholder="E-mail" required>
+        <input type="password" id="password" placeholder="Mot de passe" required>
+        <button type="submit">Se connecter</button>
+    </form>
+    <div id="responseMessage"></div>
+</div>
 
-    <main class="register-container">
-        <h2>Connectez-vous</h2>
-        <form action="#" method="post" class="register-form">
-            <input type="email" placeholder="E-mail..." required>
-            <input type="password" placeholder="Mot de passe..." required>
+<script>
+    const firebaseConfig = {
+        apiKey: "VOTRE_API_KEY",
+        authDomain: "VOTRE_AUTH_DOMAIN",
+        projectId: "VOTRE_PROJECT_ID",
+        storageBucket: "VOTRE_STORAGE_BUCKET",
+        messagingSenderId: "VOTRE_SENDER_ID",
+        appId: "VOTRE_APP_ID"
+    };
 
-            <button type="submit">Se connecter</button>
-        </form>
-    </main>
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    document.getElementById('loginForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const responseMessage = document.getElementById('responseMessage');
+
+        try {
+            const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+            const idToken = await userCredential.user.getIdToken();
+
+            const response = await fetch('http://localhost:8080/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ idToken }),
+            });
+
+            if (response.ok) {
+                const userData = await response.json();
+                responseMessage.style.color = "green";
+                responseMessage.textContent = `Bienvenue, ${userData.firstName}! Connexion réussie.`;
+            } else {
+                responseMessage.style.color = "red";
+                responseMessage.textContent = "Erreur lors de la connexion.";
+            }
+        } catch (error) {
+            responseMessage.style.color = "red";
+            responseMessage.textContent = `Erreur : ${error.message}`;
+        }
+    });
+</script>
 </body>
 
 </html>
