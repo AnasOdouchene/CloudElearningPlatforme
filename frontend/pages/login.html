@@ -87,8 +87,6 @@
 
 <script>
     // Configuration Firebase
-    import firebase from "firebase/compat";
-
     const firebaseConfig = {
         apiKey: "AIzaSyAlyKqgTUd14IZsO8wGgJ38r0-Ek7bt1Qs",
         authDomain: "education-6748b.firebaseapp.com",
@@ -99,7 +97,8 @@
         measurementId: "G-X6K0376HC2"
     };
 
-    const app = firebase.initializeApp(firebaseConfig);
+    // Initialisation Firebase
+    firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
     // Gestion du formulaire de connexion
