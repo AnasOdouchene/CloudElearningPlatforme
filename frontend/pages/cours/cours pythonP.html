@@ -1,182 +1,255 @@
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My E-School - Python</title>
-    <link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        /* Style général */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-weight: bold;
-        }
+      /* Style général */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-weight: bold;
+      }
 
-        body {
-            font-family: 'Istok Web', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-            background-color: #f9f9f9;
-        }
+      body {
+        font-family: "Istok Web", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+        background-color: #f9f9f9;
+      }
 
-        /* En-tête */
-        .header {
-            background-color: #0CE58E;
-            width: 100%;
-            padding: 30px;
-            text-align: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
+      /* En-tête */
+      .header {
+        background-color: #0ce58e;
+        width: 100%;
+        padding: 30px;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
 
-        .header h1 {
-            color: white;
-            font-size: 44px;
-        }
+      .header h1 {
+        color: white;
+        font-size: 44px;
+      }
 
-        /* Conteneur principal */
-        .main-container {
-            text-align: center;
-            margin-top: 50px;
-            width: 100%;
-            
-        }
+      /* Conteneur principal */
+      .main-container {
+        text-align: center;
+        margin-top: 50px;
+        width: 100%;
+      }
 
-        .main-container h2 {
-            font-size: 50px;
-            margin-bottom: 100px;
-        }
+      .main-container h2 {
+        font-size: 50px;
+        margin-bottom: 100px;
+      }
 
-        /* Conteneur des chapitres */
-        .chapter-container {
-            background-color: #0CE58E;
-            padding: 30px;
-            border-radius: 10px;
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 35px;
-            
-            
-        }
+      /* Conteneur des chapitres */
+      .chapter-container {
+        background-color: #0ce58e;
+        padding: 30px;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 35px;
+      }
 
-        .chapter-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: white;
-            padding: 15px 20px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            font-family: 50px;
-        }
+      .chapter-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      }
 
-        .chapter-row span {
-            font-size: 28px;
-            color: #078351;
-        }
+      .chapter-row span {
+        font-size: 28px;
+        color: #078351;
+      }
 
-        /* Boutons de suppression */
-        .delete-btn {
-            background-color: #ff4d4d;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 24px;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
+      /* Boutons de suppression */
+      .delete-btn {
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 24px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+      }
 
-        .delete-btn:hover {
-            background-color: #cc0000;
-        }
+      .delete-btn:hover {
+        background-color: #cc0000;
+      }
 
-        /* Bouton Ajouter */
-        .add-btn {
-            margin-top: 70px;
-            padding: 20px 40px;
-            background-color: #078351;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 26px;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
+      /* Bouton Ajouter */
+      .add-btn {
+        margin-top: 70px;
+        padding: 20px 40px;
+        background-color: #078351;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 26px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+      }
 
-        .add-btn:hover {
-            background-color: #06663d;
-        }
+      .add-btn:hover {
+        background-color: #06663d;
+      }
+
+      /* Upload file button */
+      .upload-btn {
+        margin-top: 30px;
+        padding: 20px 40px;
+        background-color: #078351;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 26px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+      }
+
+      .upload-btn:hover {
+        background-color: #06663d;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- En-tête -->
     <div class="header">
-        <h1>My E-School</h1>
+      <h1>My E-School</h1>
     </div>
 
     <!-- Conteneur principal -->
     <div class="main-container">
-        <h2>Les cours de Python</h2>
+      <h2>Les cours de Python</h2>
 
-        <!-- Conteneur des chapitres -->
-        <div class="chapter-container">
-            <div class="chapter-row">
-                <span>Python - Chapitre 1</span>
-                <button class="delete-btn">Supprimer</button>
-            </div>
-            <div class="chapter-row">
-                <span>Python - Chapitre 2</span>
-                <button class="delete-btn">Supprimer</button>
-            </div>
-            <div class="chapter-row">
-                <span>Python - Chapitre 3</span>
-                <button class="delete-btn">Supprimer</button>
-            </div>
-        </div>
+      <!-- Conteneur des chapitres -->
+      <div class="chapter-container" id="chapterContainer">
+        <!-- Documents will be loaded here dynamically -->
+      </div>
 
-        <!-- Bouton Ajouter -->
-        <button class="add-btn">Ajouter</button>
+      <!-- Bouton Ajouter -->
+      <button class="add-btn" onclick="showUploadForm()">
+        Ajouter un fichier
+      </button>
+
+      <!-- Upload Form (Initially hidden) -->
+      <div id="uploadForm" style="display: none; margin-top: 20px">
+        <input type="file" id="fileInput" />
+        <button class="upload-btn" onclick="uploadDocument()">
+          Télécharger
+        </button>
+      </div>
     </div>
-    <script>
-        // Supprimer un chapitre
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.target.closest('.chapter-row').remove();
-            });
-        });
-    
-        // Ajouter un nouveau chapitre
-        document.querySelector('.add-btn').addEventListener('click', () => {
-            const chapterContainer = document.querySelector('.chapter-container');
-            const newChapter = document.createElement('div');
-            newChapter.classList.add('chapter-row');
-            newChapter.innerHTML = `
-                <span>Nouveau Chapitre</span>
-                <button class="delete-btn">Supprimer</button>
-            `;
-            chapterContainer.appendChild(newChapter);
-    
-            // Ajouter l'événement de suppression au nouveau bouton
-            newChapter.querySelector('.delete-btn').addEventListener('click', (e) => {
-                e.target.closest('.chapter-row').remove();
-            });
-        });
-    </script>
-    
-</body>
 
+    <script>
+      const subject = "Python"; // Can be dynamic depending on the subject
+      const category = "cours"; // Adjust based on the category (e.g., "cours", "tds")
+
+      // Function to load documents from the server
+      function loadDocuments() {
+        fetch(
+          `http://localhost:8080/blob/getDocuments?subject=${subject}&category=${category}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            const chapterContainer =
+              document.getElementById("chapterContainer");
+            chapterContainer.innerHTML = ""; // Clear the container before reloading
+            data.forEach((file) => {
+              const chapterRow = document.createElement("div");
+              chapterRow.classList.add("chapter-row");
+              chapterRow.innerHTML = `
+                    <span>${file}</span>
+                    <button class="delete-btn" onclick="deleteDocument('${file}')">Supprimer</button>
+                `;
+              chapterContainer.appendChild(chapterRow);
+            });
+          })
+          .catch((error) => {
+            console.error("Error loading documents:", error);
+          });
+      }
+
+      // Function to delete a document
+      function deleteDocument(fileName) {
+        fetch(
+          `http://localhost:8080/blob/deleteDocument/${fileName}?subject=${subject}&category=${category}`,
+          {
+            method: "DELETE",
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            alert(data.message);
+            // Reload the documents after deletion to get the updated list
+            loadDocuments();
+          })
+          .catch((error) => {
+            console.error("Error deleting document:", error);
+          });
+      }
+
+      // Function to upload a document
+      function uploadDocument() {
+        const fileInput = document.getElementById("fileInput");
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append("subject", subject);
+        formData.append("category", category);
+        formData.append("file", file);
+
+        fetch("http://localhost:8080/blob/uploadDocument", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            alert(data.message);
+            // Reload the documents after upload to get the updated list
+            loadDocuments();
+
+            // Hide the upload form and clear the file input
+            document.getElementById("uploadForm").style.display = "none";
+            fileInput.value = ""; // Clear the input
+          })
+          .catch((error) => {
+            console.error("Error uploading document:", error);
+          });
+      }
+
+      // Function to show the upload form
+      function showUploadForm() {
+        document.getElementById("uploadForm").style.display = "block";
+      }
+
+      // Load documents when the page is loaded
+      window.onload = loadDocuments;
+    </script>
+  </body>
 </html>

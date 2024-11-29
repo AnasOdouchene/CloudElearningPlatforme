@@ -1,150 +1,209 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mes TDs/TPs de Python</title>
-    <link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        /* Style général */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-weight: bold;
-}
+      /* Style général */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-weight: bold;
+      }
 
-body {
-    font-family: 'Istok Web', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    flex-direction: column;
-    background-color: #f9f9f9;
-}
+      body {
+        font-family: "Istok Web", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        flex-direction: column;
+        background-color: #f9f9f9;
+        padding-top: 100px; /* Adjust for header height */
+      }
 
-/* En-tête */
-.header {
-    background-color: #0CE58E;
-    width: 100%;
-    padding: 30px;
-    text-align: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-}
+      /* En-tête */
+      .header {
+        background-color: #0ce58e;
+        width: 100%;
+        padding: 30px;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+      }
 
-.title {
-    color: white;
-    font-size: 44px;
-    margin: 0;
-}
+      .title {
+        color: white;
+        font-size: 44px;
+      }
 
-/* Conteneur principal */
-.main-container {
-    text-align: center;
+      /* Conteneur principal */
+      .main-container {
+        text-align: center;
+        max-width: 1200px;
+        width: 100%;
+      }
 
-    width: 200%;
-    max-width: 1000px;
-}
+      .main-container h2 {
+        font-size: 40px;
+        margin-bottom: 40px;
+      }
 
-.main-container h2 {
-    font-size: 50px;
-    margin-bottom: 100px;
-}
+      /* Conteneur pour les colonnes */
+      .chapter-wrapper {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+      }
 
-/* Conteneur pour les colonnes */
-.chapter-wrapper {
-    display: flex;
-    justify-content: center; /* Centrer les colonnes */
-    gap: 30px; /* Espace entre les colonnes */
-    flex-wrap: wrap; /* S'adapte aux petits écrans */
-    
-}
+      /* Conteneur des TDs ou TPs */
+      .chapter-container {
+        background-color: #0ce58e;
+        padding: 30px;
+        border-radius: 10px;
+        max-width: 500px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        gap: 20px;
+      }
 
-/* Conteneur des chapitres */
-.chapter-container {
-    background-color: #0CE58E;
-    padding: 30px;
-    border-radius: 10px;
-    max-width: 1000px; /* Largeur maximale d'une colonne */
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    gap: 60px;
+      /* Boutons */
+      .chapter-button {
+        background-color: white;
+        color: #078351;
+        border: none;
+        padding: 15px 20px;
+        font-size: 18px;
+        border-radius: 8px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
 
-}
+      .chapter-button:hover {
+        background-color: #d9f6e5;
+        transform: scale(1.02);
+      }
 
-/* Boutons de chapitre */
-.chapter-button {
-    background-color: white;
-    color: #078351;
-    border: none;
-    padding: 15px 20px;
-    font-size: 20px;
-    border-radius: 8px;
-    width: 100%; /* Boutons en pleine largeur */
-    display: flex;
-    justify-content: space-between; /* Texte à gauche, icône à droite */
-    align-items: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-
-}
-
-.chapter-button:hover {
-    background-color: #d9f6e5;
-    transform: scale(1.02);
-}
-
-/* Icône flèche */
-.icon {
-    font-size: 18px;
-    color: #078351;
-}
-
+      /* Icône flèche */
+      .icon {
+        font-size: 18px;
+        color: #078351;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- En-tête -->
-    <div class="header">
-        <h1 class="title">My E-School</h1>
-    </div>
+    <header class="header">
+      <h1 class="title">My E-School</h1>
+    </header>
 
     <!-- Conteneur principal -->
     <div class="main-container">
-        <h2>Mes TDs/TPs de Python</h2>
+      <h2>Mes TDs/TPs de Python</h2>
 
-        <div class="chapter-wrapper">
-            <!-- Colonne TDs -->
-            <div class="chapter-container">
-                <button class="chapter-button">
-                    Python - TD 1 <span class="icon">⤓</span>
-                </button>
-                <button class="chapter-button">
-                    Python - TD 2 <span class="icon">⤓</span>
-                </button>
-                <button class="chapter-button">
-                    Python - TD 3 <span class="icon">⤓</span>
-                </button>
-            </div>
-            <br>
-            <!-- Colonne TPs -->
-            <div class="chapter-container">
-                <button class="chapter-button">
-                    Python - TP 1 <span class="icon">⤓</span>
-                </button>
-                <button class="chapter-button">
-                    Python - TP 2 <span class="icon">⤓</span>
-                </button>
-                <button class="chapter-button">
-                    Python - TP 3 <span class="icon">⤓</span>
-                </button>
-            </div>
+      <div class="chapter-wrapper">
+        <!-- Conteneur TDs -->
+        <div class="chapter-container" id="td-container">
+          <h3>TDs de Python</h3>
+          <!-- TD buttons will be dynamically added here -->
         </div>
+
+        <!-- Conteneur TPs -->
+        <div class="chapter-container" id="tp-container">
+          <h3>TPs de Python</h3>
+          <!-- TP buttons will be dynamically added here -->
+        </div>
+      </div>
     </div>
-</body>
+
+    <script>
+      // Fetch and display TDs and TPs
+      // Fetch and display TDs or TPs
+      function loadDocuments(subject, category, containerId) {
+        fetch(
+          `http://localhost:8080/blob/getDocuments?subject=${encodeURIComponent(
+            subject
+          )}&category=${encodeURIComponent(category)}`
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`Failed to fetch ${category}`);
+            }
+            return response.json();
+          })
+          .then((documents) => {
+            const container = document.getElementById(containerId);
+            container.innerHTML = ""; // Clear previous content
+
+            if (documents.length === 0) {
+              container.innerHTML += `<p>Aucun document trouvé pour ${category}.</p>`;
+              return;
+            }
+
+            documents.forEach((doc) => {
+              const button = document.createElement("button");
+              button.classList.add("chapter-button");
+              button.innerHTML = `${doc} <span class="icon">⤓</span>`;
+              button.onclick = () => downloadDocument(subject, category, doc);
+              container.appendChild(button);
+            });
+          })
+          .catch((error) => {
+            console.error(`Error fetching ${category}:`, error);
+            const container = document.getElementById(containerId);
+            container.innerHTML += `<p>Erreur lors du chargement des ${category}.</p>`;
+          });
+      }
+
+      // Download a document
+      function downloadDocument(subject, category, fileName) {
+        fetch(
+          `http://localhost:8080/blob/downloadDocument/${encodeURIComponent(
+            fileName
+          )}?subject=${encodeURIComponent(
+            subject
+          )}&category=${encodeURIComponent(category)}`,
+          { method: "GET" }
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`Failed to download ${fileName}`);
+            }
+            return response.blob();
+          })
+          .then((blob) => {
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = fileName;
+            link.click();
+          })
+          .catch((error) => {
+            console.error(`Error downloading ${fileName}:`, error);
+            alert(`Erreur lors du téléchargement de ${fileName}.`);
+          });
+      }
+
+      // Load TDs and TPs on page load
+      window.onload = () => {
+        loadDocuments("Python", "tdstps/tds", "td-container");
+        loadDocuments("Python", "tdstps/tps", "tp-container");
+      };
+    </script>
+  </body>
 </html>

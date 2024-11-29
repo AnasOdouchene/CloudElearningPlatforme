@@ -1,181 +1,254 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projet Python</title>
-    <link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My E-School - Projets</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        /* Style général */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      /* Style général */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-weight: bold;
+      }
 
-        body {
-            font-family: 'Istok Web', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #f9f9f9;
-        }
+      body {
+        font-family: "Istok Web", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+        background-color: #f9f9f9;
+      }
 
-        /* En-tête */
-        .header {
-            background-color: #0CE58E;
-            width: 100%;
-            padding: 20px 0;
-            text-align: center;
-        }
+      /* En-tête */
+      .header {
+        background-color: #0ce58e;
+        width: 100%;
+        padding: 30px;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
 
-        .header h1 {
-            color: white;
-            font-size: 36px;
-        }
+      .header h1 {
+        color: white;
+        font-size: 44px;
+      }
 
-        /* Conteneur principal */
-        .main-container {
-            margin-top: 250px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 100px;
-            width: 90%;
-            height: 100%;
-            max-width: 1000px;
-            max-height: 1000px;
-        }
+      /* Conteneur principal */
+      .main-container {
+        text-align: center;
+        margin-top: 50px;
+        width: 100%;
+      }
 
-        .main-container h2 {
-            font-size: 54px;
-            color: #333;
-        }
+      .main-container h2 {
+        font-size: 50px;
+        margin-bottom: 100px;
+      }
 
-        /* Conteneur du projet */
-        .project-container {
-            background-color: #0CE58E;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            color: white;
-            width: 100%;
-            
-        }
+      /* Conteneur des projets */
+      .project-container {
+        background-color: #0ce58e;
+        padding: 30px;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 35px;
+      }
 
-        .project-container h3 {
-            font-size: 30px;
-            margin-bottom: 10px;
-        }
+      .project-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      }
 
-        /* Section de l'énoncé */
-        .statement {
-            background-color: white;
-            color: #078351;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            font-size: 20px;
-        }
+      .project-row span {
+        font-size: 28px;
+        color: #078351;
+      }
 
-        /* Conditions */
-        .conditions {
-            background-color: white;
-            color: #078351;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+      /* Boutons de suppression */
+      .delete-btn {
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 24px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+      }
 
-        .conditions ul {
-            margin-left: 20px;
-            font-size: 24px;
-            list-style-type: circle;
-        }
+      .delete-btn:hover {
+        background-color: #cc0000;
+      }
 
-        /* Boutons */
-        .buttons-container {
-            margin-top: 20px;
-            display: flex;
-            gap: 30px;
-            justify-content: center;
-            margin-left: 28px;
-        }
+      /* Bouton Ajouter */
+      .add-btn {
+        margin-top: 70px;
+        padding: 20px 40px;
+        background-color: #078351;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 26px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+      }
 
-        .btn {
-            padding: 10px 20px;
-            font-size: 30px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            
-        }
+      .add-btn:hover {
+        background-color: #06663d;
+      }
 
-        .btn-add {
-            background-color: #078351;
-            color: white;
-        }
+      /* Upload file button */
+      .upload-btn {
+        margin-top: 30px;
+        padding: 20px 40px;
+        background-color: #078351;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 26px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+      }
 
-        .btn-add:hover {
-            background-color: #055d3c;
-        }
-
-        .btn-edit {
-            background-color: #36c2a4;
-            color: white;
-        }
-
-        .btn-edit:hover {
-            background-color: #299581;
-        }
-
-        .btn-delete {
-            background-color: #FF4C4C;
-            color: white;
-        }
-
-        .btn-delete:hover {
-            background-color: #d93a3a;
-        }
+      .upload-btn:hover {
+        background-color: #06663d;
+      }
     </style>
-</head>
-<body>
+  </head>
+
+  <body>
     <!-- En-tête -->
     <div class="header">
-        <h1>My E-School</h1>
+      <h1>My E-School</h1>
     </div>
 
-    <!-- Contenu principal -->
+    <!-- Conteneur principal -->
     <div class="main-container">
-        <h2>Projet de Python à faire</h2>
+      <h2>Les projets de Python</h2>
 
-        <!-- Conteneur du projet -->
-        <div class="project-container">
-            <!-- Énoncé -->
-            <div class="statement">
-                <h3>Énoncé</h3>
-                <p>Ajoutez ici l'énoncé du projet.</p>
-            </div>
+      <!-- Conteneur des projets -->
+      <div class="project-container" id="projectContainer">
+        <!-- Documents will be loaded here dynamically -->
+      </div>
 
-            <!-- Conditions -->
-            <div class="conditions">
-                <h3>Conditions à respecter</h3>
-                <ul>
-                    <li>Condition 1</li>
-                    <li>Condition 2</li>
-                </ul>
-            </div>
-        </div>
+      <!-- Bouton Ajouter -->
+      <button class="add-btn" onclick="showUploadForm()">
+        Ajouter un fichier
+      </button>
 
-        <!-- Boutons -->
-        <div class="buttons-container">
-            <button class="btn btn-edit">Modifier</button>
-            <button class="btn btn-add">Ajouter</button>
-            <button class="btn btn-delete">Supprimer</button>
-        </div>
+      <!-- Upload Form (Initially hidden) -->
+      <div id="uploadForm" style="display: none; margin-top: 20px">
+        <input type="file" id="fileInput" />
+        <button class="upload-btn" onclick="uploadDocument()">
+          Télécharger
+        </button>
+      </div>
     </div>
-</body>
+
+    <script>
+      const subject = "Python"; // Can be dynamic depending on the subject
+      const category = "projets"; // Adjust based on the category (e.g., "cours", "tds")
+
+      // Function to load documents from the server
+      function loadDocuments() {
+        fetch(
+          `http://localhost:8080/blob/getDocuments?subject=${subject}&category=${category}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            const projectContainer = document.getElementById("projectContainer");
+            projectContainer.innerHTML = ""; // Clear the container before reloading
+            data.forEach((file) => {
+              const projectRow = document.createElement("div");
+              projectRow.classList.add("project-row");
+              projectRow.innerHTML = `
+                    <span>${file}</span>
+                    <button class="delete-btn" onclick="deleteDocument('${file}')">Supprimer</button>
+                `;
+              projectContainer.appendChild(projectRow);
+            });
+          })
+          .catch((error) => {
+            console.error("Error loading documents:", error);
+          });
+      }
+
+      // Function to delete a document
+      function deleteDocument(fileName) {
+        fetch(
+          `http://localhost:8080/blob/deleteDocument/${fileName}?subject=${subject}&category=${category}`,
+          {
+            method: "DELETE",
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            alert(data.message);
+            // Reload the documents after deletion to get the updated list
+            loadDocuments();
+          })
+          .catch((error) => {
+            console.error("Error deleting document:", error);
+          });
+      }
+
+      // Function to upload a document
+      function uploadDocument() {
+        const fileInput = document.getElementById("fileInput");
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append("subject", subject);
+        formData.append("category", category);
+        formData.append("file", file);
+
+        fetch("http://localhost:8080/blob/uploadDocument", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            alert(data.message);
+            // Reload the documents after upload to get the updated list
+            loadDocuments();
+
+            // Hide the upload form and clear the file input
+            document.getElementById("uploadForm").style.display = "none";
+            fileInput.value = ""; // Clear the input
+          })
+          .catch((error) => {
+            console.error("Error uploading document:", error);
+          });
+      }
+
+      // Function to show the upload form
+      function showUploadForm() {
+        document.getElementById("uploadForm").style.display = "block";
+      }
+
+      // Load documents when the page is loaded
+      window.onload = loadDocuments;
+    </script>
+  </body>
 </html>

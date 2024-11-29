@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -22,9 +22,9 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            /* Prend toute la hauteur de la fenêtre */
             flex-direction: column;
             background-color: #f9f9f9;
+            padding-top: 80px; /* Adjust for header height */
         }
 
         /* En-tête */
@@ -36,6 +36,7 @@
             position: fixed;
             top: 0;
             left: 0;
+            z-index: 1000;
         }
 
         .title {
@@ -46,65 +47,57 @@
         /* Conteneur principal */
         .main-container {
             text-align: center;
-            
-            /* Décalage pour que l'en-tête ne chevauche pas */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 20px;
-            /* Espace entre les éléments */
         }
 
         .main-container h2 {
-            font-size: 70px;
-            margin-bottom: 100px;
+            font-size: 40px;
+            margin-bottom: 30px;
         }
 
-        /* Conteneur du projet */
+        /* Conteneur des projets */
         .project-container {
             background-color: #0CE58E;
             padding: 30px;
             border-radius: 10px;
             max-width: 1000px;
-            width: 100%;
-            /* Largeur fluide */
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
             display: flex;
             flex-direction: column;
-            gap: 50px;
-            color: white;
-
-        }
-
-        /* Section de l'énoncé */
-        .statement,
-        .conditions {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            color: #078351;
+            align-items: center;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            gap: 20px;
+        }
+
+        /* Boutons des documents */
+        .project-button {
+            background-color: white;
+            color: #078351;
+            border: none;
+            padding: 15px 20px;
+            font-size: 18px;
+            border-radius: 8px;
             width: 100%;
-            max-width: 1000px;
-            height: 200%;
-            max-height: 2000px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
-        .statement h3,
-        .conditions h3 {
-            margin-bottom: 10px;
-            font-size: 30px;
+        .project-button:hover {
+            background-color: #d9f6e5;
+            transform: scale(1.02);
         }
 
-        /* Liste des conditions */
-        .conditions ul {
-            margin-left: 10px;
-            font-size: 20px;
-        }
-
-        .conditions li {
-            margin-bottom: 20px;
+        /* Icône flèche */
+        .icon {
+            font-size: 22px;
+            color: #078351;
         }
     </style>
 </head>
@@ -119,21 +112,84 @@
     <main class="main-container">
         <h2>Projet de Cloud Computing à faire</h2>
 
-        <!-- Conteneur du projet -->
-        <div class="project-container">
-            <div class="statement">
-                <h3>Énoncé</h3>
-                <p>Ajoutez ici l'énoncé du projet.</p>
-            </div>
-            <div class="conditions">
-                <h3>Conditions à respecter</h3>
-                <ul>
-                    <li>Condition 1</li>
-                    <li>Condition 2</li>
-                </ul>
-            </div>
+        <!-- Conteneur des projets -->
+        <div class="project-container" id="project-container">
+            <!-- Documents will be inserted dynamically here -->
         </div>
     </main>
+
+    <script>
+        // Fetch documents from the backend
+        function loadProjects(subject, category) {
+            fetch(
+                `http://localhost:8080/blob/getDocuments?subject=${encodeURIComponent(
+                    subject
+                )}&category=${encodeURIComponent(category)}`
+            )
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Failed to fetch projects");
+                    }
+                    return response.json();
+                })
+                .then((documents) => {
+                    const container = document.getElementById("project-container");
+                    container.innerHTML = ""; // Clear previous content
+
+                    if (documents.length === 0) {
+                        container.innerHTML = "<p>Aucun projet trouvé.</p>";
+                        return;
+                    }
+
+                    documents.forEach((doc) => {
+                        const button = document.createElement("button");
+                        button.classList.add("project-button");
+                        button.innerHTML = `${doc} <span class="icon">⤓</span>`;
+                        button.onclick = () => downloadProject(subject, category, doc);
+                        container.appendChild(button);
+                    });
+                })
+                .catch((error) => {
+                    console.error("Error fetching projects:", error);
+                    const container = document.getElementById("project-container");
+                    container.innerHTML =
+                        "<p>Une erreur s'est produite lors du chargement des projets.</p>";
+                });
+        }
+
+        // Download project document
+        function downloadProject(subject, category, fileName) {
+            fetch(
+                `http://localhost:8080/blob/downloadDocument/${encodeURIComponent(
+                    fileName
+                )}?subject=${encodeURIComponent(subject)}&category=${encodeURIComponent(
+                    category
+                )}`,
+                { method: "GET" }
+            )
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Failed to download project");
+                    }
+                    return response.blob();
+                })
+                .then((blob) => {
+                    const link = document.createElement("a");
+                    link.href = URL.createObjectURL(blob);
+                    link.download = fileName;
+                    link.click();
+                })
+                .catch((error) => {
+                    console.error("Error downloading project:", error);
+                    alert(
+                        "Une erreur s'est produite lors du téléchargement du projet."
+                    );
+                });
+        }
+
+        // Load projects when the page loads (for Cloud Computing projects for example)
+        window.onload = () => loadProjects("Cloud Computing", "projets");
+    </script>
 </body>
 
 </html>
