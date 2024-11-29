@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +95,71 @@ public class BlobStorageController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body(null);
+        }
+    }
+
+    /**
+     * Upload a document to Azure Blob Storage
+     */
+    @PostMapping("/uploadDocument")
+    public ResponseEntity<String> uploadDocument(
+            @RequestParam("subject") String subject,
+            @RequestParam("category") String category,
+            @RequestParam("file") MultipartFile file) {
+        try {
+            // Initialize the Azure Blob Service client
+            BlobServiceClient blobServiceClient = new BlobServiceClientBuilder()
+                    .connectionString(connectionString)
+                    .buildClient();
+            BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(containerName);
+
+            // Construct the blob path
+            String blobPath = subject + "/" + category + "/" + file.getOriginalFilename();
+
+            // Get a BlobClient to interact with the blob
+            BlobClient blobClient = containerClient.getBlobClient(blobPath);
+
+            // Upload the file content to Azure Blob Storage
+            blobClient.upload(file.getInputStream(), file.getSize(), true);
+
+            return ResponseEntity.ok("File uploaded successfully: " + file.getOriginalFilename());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error uploading file: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Delete a document from Azure Blob Storage
+     */
+    @DeleteMapping("/deleteDocument/{fileName}")
+    public ResponseEntity<String> deleteDocument(
+            @RequestParam("subject") String subject,
+            @RequestParam("category") String category,
+            @PathVariable String fileName) {
+        try {
+            // Initialize the Azure Blob Service client
+            BlobServiceClient blobServiceClient = new BlobServiceClientBuilder()
+                    .connectionString(connectionString)
+                    .buildClient();
+            BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(containerName);
+
+            // Construct the blob path
+            String blobPath = subject + "/" + category + "/" + fileName;
+
+            // Get a BlobClient to interact with the blob
+            BlobClient blobClient = containerClient.getBlobClient(blobPath);
+
+            // Delete the blob
+            if (blobClient.exists()) {
+                blobClient.delete();
+                return ResponseEntity.ok("File deleted successfully: " + fileName);
+            } else {
+                return ResponseEntity.status(404).body("File not found: " + fileName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error deleting file: " + e.getMessage());
         }
     }
 }
