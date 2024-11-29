@@ -123,7 +123,7 @@
                 const userData = await response.json();
 
                 if (userData.role === "ETUDIANT") { // Vérifie si l'utilisateur est un étudiant
-                    window.location.href = "matieres.html"; // Redirige vers matiere.html
+                    window.location.href = "./pages/matieres/matieres.html"; // Redirige vers matiere.html
                 } else {
                     responseMessage.className = "error";
                     responseMessage.textContent = "Vous n'avez pas accès à cette section.";
