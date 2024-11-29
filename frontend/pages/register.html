@@ -131,14 +131,22 @@
     // Gestion du formulaire
     document.getElementById('registerForm').addEventListener('submit', async (event) => {
         event.preventDefault(); // Empêcher l'envoi par défaut du formulaire
-        const firstName = document.getElementById('firstName').value;
-        const lastName = document.getElementById('lastName').value;
-        const username = document.getElementById('username').value;
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        const username = document.getElementById('username').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
         const role = document.querySelector('input[name="role"]:checked').value;
 
         const responseMessage = document.getElementById('responseMessage');
+
+        // Validation côté frontend
+        if (!firstName || !lastName || !username || !email || !password || !role) {
+            responseMessage.className = "error";
+            responseMessage.textContent = "Tous les champs sont requis.";
+            return;
+        }
 
         try {
             const response = await fetch('http://localhost:8080/register', {
@@ -159,15 +167,16 @@
                 responseMessage.className = "success";
                 responseMessage.textContent = `Inscription réussie pour ${data.firstName} ${data.lastName}!`;
             } else {
-                const errorData = await response.text();
+                const errorData = await response.json();
                 responseMessage.className = "error";
-                responseMessage.textContent = `Erreur : ${errorData}`;
+                responseMessage.textContent = `Erreur : ${errorData.message || "Problème lors de l'inscription"}`;
             }
         } catch (error) {
             responseMessage.className = "error";
-            responseMessage.textContent = `Erreur : ${error.message}`;
+            responseMessage.textContent = `Erreur réseau : ${error.message}`;
         }
     });
+
 </script>
 </body>
 
