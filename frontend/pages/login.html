@@ -84,7 +84,6 @@
     </form>
     <div id="responseMessage"></div>
 </div>
-
 <script>
     // Configuration Firebase
     const firebaseConfig = {
@@ -104,8 +103,8 @@
     // Gestion du formulaire de connexion
     document.getElementById('loginForm').addEventListener('submit', async (event) => {
         event.preventDefault();
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
         const responseMessage = document.getElementById('responseMessage');
 
         try {
@@ -122,11 +121,17 @@
 
             if (response.ok) {
                 const userData = await response.json();
-                responseMessage.className = "success";
-                responseMessage.textContent = `Bienvenue, ${userData.firstName}! Connexion réussie.`;
+
+                if (userData.role === "ETUDIANT") { // Vérifie si l'utilisateur est un étudiant
+                    window.location.href = "matiere.html"; // Redirige vers matiere.html
+                } else {
+                    responseMessage.className = "error";
+                    responseMessage.textContent = "Vous n'avez pas accès à cette section.";
+                }
             } else {
+                const errorData = await response.text();
                 responseMessage.className = "error";
-                responseMessage.textContent = "Erreur lors de la connexion.";
+                responseMessage.textContent = `Erreur : ${errorData}`;
             }
         } catch (error) {
             responseMessage.className = "error";
@@ -134,6 +139,7 @@
         }
     });
 </script>
+
 </body>
 
 </html>
