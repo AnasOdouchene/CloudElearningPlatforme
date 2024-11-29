@@ -27,6 +27,13 @@ public class UserController
             @RequestParam String password,
             @RequestParam Role role) {
         try {
+            // Logging des données reçues pour diagnostiquer les problemes
+            System.out.println("Données reçues : ");
+            System.out.println("Prénom : " + firstName);
+            System.out.println("Nom : " + lastName);
+            System.out.println("Nom d'utilisateur : " + username);
+            System.out.println("Email : " + email);
+            System.out.println("Role : " + role);
             User user = userService.registerUser(
                     email,       // Correspond à `email` dans UserService
                     password,    // Correspond à `password`
@@ -36,6 +43,8 @@ public class UserController
                     role);
             return ResponseEntity.ok(user);
         } catch (Exception e) {
+            //logging pour les eurreurs
+            System.err.println("Erreur lors de l'inscription : " + e.getMessage());
             return ResponseEntity.badRequest().body(null);
         }
     }
