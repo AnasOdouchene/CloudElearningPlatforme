@@ -128,8 +128,9 @@
 </div>
 
 <script>
+    // Gestion du formulaire
     document.getElementById('registerForm').addEventListener('submit', async (event) => {
-        event.preventDefault();
+        event.preventDefault(); // Empêcher l'envoi par défaut du formulaire
         const firstName = document.getElementById('firstName').value;
         const lastName = document.getElementById('lastName').value;
         const username = document.getElementById('username').value;
