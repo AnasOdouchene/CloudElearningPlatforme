@@ -23,6 +23,7 @@
             height: 100vh;
             flex-direction: column;
             background-color: #f9f9f9;
+            padding-top: 80px; /* Adjust for header height */
         }
 
         /* En-tête */
@@ -34,6 +35,7 @@
             position: fixed;
             top: 0;
             left: 0;
+            z-index: 1000;
         }
 
         .title {
@@ -45,20 +47,15 @@
         /* Conteneur principal */
         .main-container {
             text-align: center;
-            
-            /* Décalage pour que l'en-tête ne chevauche pas */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 30px;
-            /* Espace entre les éléments */
-
         }
 
         .main-container h2 {
             font-size: 40px;
-            /* Taille du texte */
             margin-bottom: 30px;
         }
 
@@ -68,12 +65,12 @@
             padding: 30px;
             border-radius: 10px;
             max-width: 1000px;
-            width: 220%;
+            width: 90%;
             display: flex;
             flex-direction: column;
             align-items: center;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            gap: 50px;
+            gap: 20px;
         }
 
         /* Boutons de chapitre */
@@ -81,8 +78,8 @@
             background-color: white;
             color: #078351;
             border: none;
-            padding: 35px;
-            font-size: 28px;
+            padding: 15px 20px;
+            font-size: 18px;
             border-radius: 8px;
             width: 100%;
             display: flex;
@@ -90,7 +87,6 @@
             align-items: center;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
-
         }
 
         .chapter-button:hover {
@@ -100,14 +96,13 @@
 
         /* Icône flèche */
         .icon {
-            font-size: 28px;
+            font-size: 22px;
             color: #078351;
         }
     </style>
 </head>
 
 <body>
-
     <!-- En-tête -->
     <div class="header">
         <h1 class="title">My E-School</h1>
@@ -118,22 +113,83 @@
         <h2>Mes cours de Cloud Computing</h2>
 
         <!-- Conteneur des chapitres -->
-        <div class="chapter-container">
-            <button class="chapter-button">
-                Cloud Computing - Chapitre 1
-                <span class="icon">⤓</span> <!-- Icône de téléchargement -->
-            </button>
-            <button class="chapter-button">
-                Cloud Computing - Chapitre 2
-                <span class="icon">⤓</span> <!-- Icône de téléchargement -->
-            </button>
-            <button class="chapter-button">
-                Cloud Computing - Chapitre 3
-                <span class="icon">⤓</span> <!-- Icône de téléchargement -->
-            </button>
+        <div class="chapter-container" id="chapter-container">
+            <!-- Documents will be inserted dynamically here -->
         </div>
     </div>
 
+    <script>
+        // Fetch documents from the backend
+        function loadDocuments(subject, category) {
+            fetch(
+                `http://localhost:8080/blob/getDocuments?subject=${encodeURIComponent(
+                    subject
+                )}&category=${encodeURIComponent(category)}`
+            )
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Failed to fetch documents");
+                    }
+                    return response.json();
+                })
+                .then((documents) => {
+                    const container = document.getElementById("chapter-container");
+                    container.innerHTML = ""; // Clear previous content
+
+                    if (documents.length === 0) {
+                        container.innerHTML = "<p>Aucun document trouvé.</p>";
+                        return;
+                    }
+
+                    documents.forEach((doc) => {
+                        const button = document.createElement("button");
+                        button.classList.add("chapter-button");
+                        button.innerHTML = `${doc} <span class="icon">⤓</span>`;
+                        button.onclick = () => downloadDocument(subject, category, doc);
+                        container.appendChild(button);
+                    });
+                })
+                .catch((error) => {
+                    console.error("Error fetching documents:", error);
+                    const container = document.getElementById("chapter-container");
+                    container.innerHTML =
+                        "<p>Une erreur s'est produite lors du chargement des documents.</p>";
+                });
+        }
+
+        // Download document
+        function downloadDocument(subject, category, fileName) {
+            fetch(
+                `http://localhost:8080/blob/downloadDocument/${encodeURIComponent(
+                    fileName
+                )}?subject=${encodeURIComponent(subject)}&category=${encodeURIComponent(
+                    category
+                )}`,
+                { method: "GET" }
+            )
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Failed to download document");
+                    }
+                    return response.blob();
+                })
+                .then((blob) => {
+                    const link = document.createElement("a");
+                    link.href = URL.createObjectURL(blob);
+                    link.download = fileName;
+                    link.click();
+                })
+                .catch((error) => {
+                    console.error("Error downloading document:", error);
+                    alert(
+                        "Une erreur s'est produite lors du téléchargement du document."
+                    );
+                });
+        }
+
+        // Load documents when the page loads (for Cloud Computing cours for example)
+        window.onload = () => loadDocuments("Cloud Computing", "cours");
+    </script>
 </body>
 
 </html>

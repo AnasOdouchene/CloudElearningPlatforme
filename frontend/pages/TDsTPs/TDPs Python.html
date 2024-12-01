@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My E-School - Python</title>
+    <title>Mes TDs/TPs de Python</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap"
       rel="stylesheet"
@@ -22,10 +22,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        min-height: 100vh;
         flex-direction: column;
         background-color: #f9f9f9;
-        padding-top: 80px; /* Adjust for header height */
+        padding-top: 100px; /* Adjust for header height */
       }
 
       /* En-tête */
@@ -43,31 +43,35 @@
       .title {
         color: white;
         font-size: 44px;
-        margin: 0;
       }
 
       /* Conteneur principal */
       .main-container {
         text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 30px;
+        max-width: 1200px;
+        width: 100%;
       }
 
       .main-container h2 {
         font-size: 40px;
-        margin-bottom: 30px;
+        margin-bottom: 40px;
       }
 
-      /* Conteneur des chapitres */
+      /* Conteneur pour les colonnes */
+      .chapter-wrapper {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+      }
+
+      /* Conteneur des TDs ou TPs */
       .chapter-container {
         background-color: #0ce58e;
         padding: 30px;
         border-radius: 10px;
-        max-width: 1000px;
-        width: 90%;
+        max-width: 500px;
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -75,7 +79,7 @@
         gap: 20px;
       }
 
-      /* Boutons de chapitre */
+      /* Boutons */
       .chapter-button {
         background-color: white;
         color: #078351;
@@ -98,31 +102,40 @@
 
       /* Icône flèche */
       .icon {
-        font-size: 22px;
+        font-size: 18px;
         color: #078351;
       }
     </style>
   </head>
-
   <body>
     <!-- En-tête -->
-    <div class="header">
+    <header class="header">
       <h1 class="title">My E-School</h1>
-    </div>
+    </header>
 
     <!-- Conteneur principal -->
     <div class="main-container">
-      <h2>Mes cours de Python</h2>
+      <h2>Mes TDs/TPs de Python</h2>
 
-      <!-- Conteneur des chapitres -->
-      <div class="chapter-container" id="chapter-container">
-        <!-- Documents will be inserted dynamically here -->
+      <div class="chapter-wrapper">
+        <!-- Conteneur TDs -->
+        <div class="chapter-container" id="td-container">
+          <h3>TDs de Python</h3>
+          <!-- TD buttons will be dynamically added here -->
+        </div>
+
+        <!-- Conteneur TPs -->
+        <div class="chapter-container" id="tp-container">
+          <h3>TPs de Python</h3>
+          <!-- TP buttons will be dynamically added here -->
+        </div>
       </div>
     </div>
 
     <script>
-      // Fetch documents from the backend
-      function loadDocuments(subject, category) {
+      // Fetch and display TDs and TPs
+      // Fetch and display TDs or TPs
+      function loadDocuments(subject, category, containerId) {
         fetch(
           `http://localhost:8080/blob/getDocuments?subject=${encodeURIComponent(
             subject
@@ -130,16 +143,16 @@
         )
           .then((response) => {
             if (!response.ok) {
-              throw new Error("Failed to fetch documents");
+              throw new Error(`Failed to fetch ${category}`);
             }
             return response.json();
           })
           .then((documents) => {
-            const container = document.getElementById("chapter-container");
+            const container = document.getElementById(containerId);
             container.innerHTML = ""; // Clear previous content
 
             if (documents.length === 0) {
-              container.innerHTML = "<p>Aucun document trouvé.</p>";
+              container.innerHTML += `<p>Aucun document trouvé pour ${category}.</p>`;
               return;
             }
 
@@ -152,26 +165,25 @@
             });
           })
           .catch((error) => {
-            console.error("Error fetching documents:", error);
-            const container = document.getElementById("chapter-container");
-            container.innerHTML =
-              "<p>Une erreur s'est produite lors du chargement des documents.</p>";
+            console.error(`Error fetching ${category}:`, error);
+            const container = document.getElementById(containerId);
+            container.innerHTML += `<p>Erreur lors du chargement des ${category}.</p>`;
           });
       }
 
-      // Download document
+      // Download a document
       function downloadDocument(subject, category, fileName) {
         fetch(
           `http://localhost:8080/blob/downloadDocument/${encodeURIComponent(
             fileName
-          )}?subject=${encodeURIComponent(subject)}&category=${encodeURIComponent(
-            category
-          )}`,
+          )}?subject=${encodeURIComponent(
+            subject
+          )}&category=${encodeURIComponent(category)}`,
           { method: "GET" }
         )
           .then((response) => {
             if (!response.ok) {
-              throw new Error("Failed to download document");
+              throw new Error(`Failed to download ${fileName}`);
             }
             return response.blob();
           })
@@ -182,15 +194,16 @@
             link.click();
           })
           .catch((error) => {
-            console.error("Error downloading document:", error);
-            alert(
-              "Une erreur s'est produite lors du téléchargement du document."
-            );
+            console.error(`Error downloading ${fileName}:`, error);
+            alert(`Erreur lors du téléchargement de ${fileName}.`);
           });
       }
 
-      // Load documents when the page loads (for Python cours for example)
-      window.onload = () => loadDocuments("Python", "cours");
+      // Load TDs and TPs on page load
+      window.onload = () => {
+        loadDocuments("Python", "tdstps/tds", "td-container");
+        loadDocuments("Python", "tdstps/tps", "tp-container");
+      };
     </script>
   </body>
 </html>
