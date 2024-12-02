@@ -1,18 +1,13 @@
 package com.backend.backend.Web;
 
-import com.azure.storage.blob.BlobServiceClient;
-import com.azure.storage.blob.BlobServiceClientBuilder;
-import com.azure.storage.blob.BlobContainerClient;
-import com.azure.storage.blob.BlobClient;
-import com.azure.storage.blob.models.BlobItem;
-import org.springframework.beans.factory.annotation.Value;
+import com.backend.backend.Service.AzureBlobService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,65 +15,29 @@ import java.util.List;
 @CrossOrigin(origins = "http://127.0.0.1:5500/") // Allow requests from any origin
 public class BlobStorageController {
 
-    // Inject Azure Blob Storage credentials
-    @Value("${spring.cloud.azure.storage.blob.connection-string}")
-    private String connectionString;
-
-    // Name of the Azure Blob Storage container
-    @Value("${spring.cloud.azure.storage.blob.container-name}")
-    private String containerName;
+    @Autowired
+    private AzureBlobService azureBlobService;
 
     /**
      * Get a list of documents in the specified subject and category folder
      */
     @GetMapping("/getDocuments")
     public ResponseEntity<List<String>> getDocuments(@RequestParam("subject") String subject, @RequestParam("category") String category) {
-        try {
-            // Initialize the Azure Blob Service client
-            BlobServiceClient blobServiceClient = new BlobServiceClientBuilder()
-                    .connectionString(connectionString)
-                    .buildClient();
-            BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(containerName);
-
-            // Define the prefix (subject/category)
-            String prefix = subject + "/" + category + "/";
-
-            // Fetch blobs with the specified prefix
-            List<String> documentNames = new ArrayList<>();
-            containerClient.listBlobs().forEach(blobItem -> {
-                if (blobItem.getName().startsWith(prefix)) {
-                    documentNames.add(blobItem.getName().replace(prefix, "")); // Remove the prefix for clean display
-                }
-            });
-
+        List<String> documentNames = azureBlobService.getDocuments(subject, category);
+        if (documentNames != null) {
             return ResponseEntity.ok(documentNames);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
             return ResponseEntity.status(500).body(null);
         }
     }
-
 
     /**
      * Download a specific document from the Azure Blob Storage
      */
     @GetMapping("/downloadDocument/{fileName}")
     public ResponseEntity<byte[]> downloadDocument(@RequestParam("subject") String subject, @RequestParam("category") String category, @PathVariable String fileName) {
-        try {
-            // Initialize the Azure Blob Service client
-            BlobServiceClient blobServiceClient = new BlobServiceClientBuilder()
-                    .connectionString(connectionString)
-                    .buildClient();
-            BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(containerName);
-
-            // Construct the full path of the blob
-            String blobPath = subject + "/" + category + "/" + fileName; // Full path in Azure
-            BlobClient blobClient = containerClient.getBlobClient(blobPath);
-
-            // Download the file content
-            byte[] fileContent = blobClient.downloadContent().toBytes();
-
-            // Determine the content type dynamically
+        byte[] fileContent = azureBlobService.downloadDocument(subject, category, fileName);
+        if (fileContent != null) {
             String contentType = "application/octet-stream"; // Default for binary files
             if (fileName.endsWith(".pdf")) {
                 contentType = "application/pdf";
@@ -92,8 +51,7 @@ public class BlobStorageController {
                     .contentType(MediaType.parseMediaType(contentType))
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
                     .body(fileContent);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
             return ResponseEntity.status(500).body(null);
         }
     }
@@ -106,26 +64,11 @@ public class BlobStorageController {
             @RequestParam("subject") String subject,
             @RequestParam("category") String category,
             @RequestParam("file") MultipartFile file) {
-        try {
-            // Initialize the Azure Blob Service client
-            BlobServiceClient blobServiceClient = new BlobServiceClientBuilder()
-                    .connectionString(connectionString)
-                    .buildClient();
-            BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(containerName);
-
-            // Construct the blob path
-            String blobPath = subject + "/" + category + "/" + file.getOriginalFilename();
-
-            // Get a BlobClient to interact with the blob
-            BlobClient blobClient = containerClient.getBlobClient(blobPath);
-
-            // Upload the file content to Azure Blob Storage
-            blobClient.upload(file.getInputStream(), file.getSize(), true);
-
-            return ResponseEntity.ok("File uploaded successfully: " + file.getOriginalFilename());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body("Error uploading file: " + e.getMessage());
+        String response = azureBlobService.uploadDocument(subject, category, file);
+        if (response.startsWith("File uploaded successfully")) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(500).body(response);
         }
     }
 
@@ -137,29 +80,11 @@ public class BlobStorageController {
             @RequestParam("subject") String subject,
             @RequestParam("category") String category,
             @PathVariable String fileName) {
-        try {
-            // Initialize the Azure Blob Service client
-            BlobServiceClient blobServiceClient = new BlobServiceClientBuilder()
-                    .connectionString(connectionString)
-                    .buildClient();
-            BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(containerName);
-
-            // Construct the blob path
-            String blobPath = subject + "/" + category + "/" + fileName;
-
-            // Get a BlobClient to interact with the blob
-            BlobClient blobClient = containerClient.getBlobClient(blobPath);
-
-            // Delete the blob
-            if (blobClient.exists()) {
-                blobClient.delete();
-                return ResponseEntity.ok("File deleted successfully: " + fileName);
-            } else {
-                return ResponseEntity.status(404).body("File not found: " + fileName);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body("Error deleting file: " + e.getMessage());
+        String response = azureBlobService.deleteDocument(subject, category, fileName);
+        if (response.startsWith("File deleted successfully")) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(404).body(response);
         }
     }
 }
