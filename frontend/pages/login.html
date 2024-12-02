@@ -123,7 +123,6 @@
       .password-toggle input {
         flex: 1;
         padding-right: 40px; /* Pour faire de la place à l'icône */
-        
       }
 
       .password-toggle .toggle-icon {
@@ -211,8 +210,14 @@
               password
             );
 
-            // Si la connexion réussit, envoyez le token au backend
+            // Récupérer l'UID et le token de l'utilisateur
+            const uid = userCredential.user.uid;
             const idToken = await userCredential.user.getIdToken();
+
+            // Stocker l'UID et le token dans le localStorage
+            localStorage.setItem("firebaseUid", uid); // Stocke l'UID dans le localStorage
+            localStorage.setItem("idToken", idToken); // Stocke le token dans le localStorage (si nécessaire)
+
             const response = await fetch("http://localhost:8080/login", {
               method: "POST",
               headers: { "Content-Type": "application/x-www-form-urlencoded" },

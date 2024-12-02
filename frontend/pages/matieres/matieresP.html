@@ -29,28 +29,47 @@
         .header {
             background-color: #0CE58E;
             width: 100%;
-            padding: 30px;
+            padding: 20px;
             text-align: center;
             position: fixed;
             top: 0;
             left: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
         }
 
         .title {
-            color: white;
-            font-size: 44px;
+            font-size: 24px;
             margin: 0;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logout-btn {
+            background-color: white;
+            color: #078351;
+            border: none;
+            padding: 10px 15px;
+            font-size: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #d9f6e5;
         }
 
         /* Conteneur principal */
         .main-container {
             text-align: center;
             margin-top: 120px;
-        }
-
-        .main-container h2 {
-            font-size: 40px;
-            margin-bottom: 30px;
         }
 
         .main-container h3 {
@@ -109,22 +128,69 @@
 <body>
 
     <!-- En-tête -->
+    <!-- En-tête -->
     <header class="header">
         <h1 class="title">My E-School</h1>
+        <div class="user-info">
+            <span id="userName">Bonjour, Utilisateur !</span>
+            <button class="logout-btn" onclick="logout()">Déconnexion</button>
+        </div>
     </header>
 
     <!-- Conteneur principal -->
     <div class="main-container">
-        <h2>Bonjour Professeur !</h2>
         <h3>Mes matières</h3>
 
         <!-- Conteneur des matières -->
         <div class="subjects-container" id="subjects-container">
             <!-- Les matières seront générées dynamiquement ici -->
         </div>
+
     </div>
 
     <script>
+        // Vérification de la connexion de l'utilisateur
+        const firebaseUid = localStorage.getItem("firebaseUid");
+
+        // Fonction pour récupérer les informations de l'utilisateur depuis l'API
+        async function fetchUserDetails() {
+            const firebaseUid = localStorage.getItem("firebaseUid");
+
+            if (!firebaseUid) {
+                console.error("Aucun utilisateur connecté.");
+                alert("Veuillez vous connecter pour accéder à cette page.");
+                window.location.href = "/pages/login.html"; // Redirige vers la page de connexion si l'utilisateur n'est pas connecté
+
+            }
+
+            try {
+                const response = await fetch(`http://localhost:8080/${firebaseUid}`); // URL de votre API
+                if (response.ok) {
+                    const user = await response.json();
+                    document.getElementById("userName").textContent = `Bonjour professeur, ${user.firstName} ${user.lastName} !`;
+                } else {
+                    console.error("Professeur non trouvé");
+                    document.getElementById("userName").textContent = "Bonjour, professeur inconnu !";
+                }
+            } catch (error) {
+                console.error("Erreur réseau : ", error);
+                document.getElementById("userName").textContent = "Bonjour, professeur inconnu !";
+            }
+        }
+
+        // Appeler la fonction pour récupérer les données de l'utilisateur
+        fetchUserDetails();
+
+        // Fonction de déconnexion
+        function logout() {
+            // Retirer les données de l'utilisateur du localStorage
+            localStorage.removeItem("firebaseUid");
+            localStorage.removeItem("firstName");
+            localStorage.removeItem("lastName");
+            // Rediriger vers la page de connexion
+            window.location.href = "/pages/login.html";
+        }
+
         // Données des matières (peuvent être récupérées dynamiquement via API)
         const subjects = [
             {
