@@ -59,6 +59,26 @@
             background-color: #078351;
         }
 
+        .register-container {
+            margin-top: 20px;
+        }
+
+        .register-button {
+            padding: 12px;
+            background-color: #2ecc71;
+            border: none;
+            color: white;
+            font-size: 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .register-button:hover {
+            background-color: #27ae60;
+        }
+
         #responseMessage {
             margin-top: 15px;
             font-size: 14px;
@@ -83,7 +103,11 @@
         <button type="submit">Se connecter</button>
     </form>
     <div id="responseMessage"></div>
+    <div class="register-container">
+        <button class="register-button" onclick="redirectToRegister()">Créer un compte</button>
+    </div>
 </div>
+
 <script>
     // Configuration Firebase
     const firebaseConfig = {
@@ -143,8 +167,12 @@
             responseMessage.textContent = `Erreur : ${error.message}`;
         }
     });
-</script>
 
+    // Fonction pour rediriger vers la page d'inscription
+    function redirectToRegister() {
+        window.location.href = "register.html";
+    }
+</script>
 </body>
 
 </html>
