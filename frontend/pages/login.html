@@ -120,13 +120,18 @@
             });
 
             if (response.ok) {
-                const userData = await response.json();
+                const userData = await response.json(); // On suppose que le rôle est dans userData.role
+                responseMessage.className = "success";
+                responseMessage.textContent = `Bienvenue, ${userData.firstName}! Connexion réussie.`;
 
-                if (userData.role === "ETUDIANT") { // Vérifie si l'utilisateur est un étudiant
-                    window.location.href = "./pages/matieres/matieres.html"; // Redirige vers matiere.html
+                // Redirection basée sur le rôle
+                if (userData.role === "ETUDIANT") {
+                    window.location.href = "/frontend/pages/matieres/matieres.html";
+                } else if (userData.role === "PROFESSEUR") {
+                    window.location.href = "/frontend/pages/matieres/matieresP.html";
                 } else {
                     responseMessage.className = "error";
-                    responseMessage.textContent = "Vous n'avez pas accès à cette section.";
+                    responseMessage.textContent = "Rôle inconnu. Contactez l'administrateur.";
                 }
             } else {
                 const errorData = await response.text();
