@@ -1,178 +1,284 @@
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Connexion - My E-School</title>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <style>
-        /* Styles de base */
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background: linear-gradient(to right, #0CE58E, #078351);
-        }
+      /* Styles généraux */
+      body {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to right, #0ce58e, #078351);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
 
-        .login-container {
-            width: 400px;
-            padding: 30px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
+      .login-container {
+        width: 400px;
+        padding: 30px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.2);
+        text-align: center;
+      }
 
-        .login-container h2 {
-            margin-bottom: 20px;
-            font-size: 28px;
-            color: #078351;
-        }
+      .login-container h2 {
+        margin-bottom: 20px;
+        font-size: 28px;
+        color: #078351;
+        font-weight: 600;
+      }
 
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-        }
+      input {
+        width: 93.2%;
+        padding: 12px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+      }
 
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #0CE58E;
-            border: none;
-            color: white;
-            font-size: 18px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+      input:focus {
+        border-color: #0ce58e;
+        outline: none;
+        box-shadow: 0px 0px 8px rgba(12, 229, 142, 0.6);
+      }
 
-        button:hover {
-            background-color: #078351;
-        }
+      button {
+        width: 70%;
+        padding: 12px;
+        background-color: #0ce58e;
+        border: none;
+        color: white;
+        font-size: 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
 
-        .register-container {
-            margin-top: 20px;
-        }
+      button:hover {
+        background-color: #078351;
+      }
 
-        .register-button {
-            padding: 12px;
-            background-color: #2ecc71;
-            border: none;
-            color: white;
-            font-size: 18px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            width: 100%;
-        }
+      .register-container {
+        margin-top: 15px;
+      }
 
-        .register-button:hover {
-            background-color: #27ae60;
-        }
+      .register-button {
+        padding: 12px;
+        background-color: #2ecc71;
+        border: none;
+        color: white;
+        font-size: 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 70%;
+      }
 
-        #responseMessage {
-            margin-top: 15px;
-            font-size: 14px;
-        }
+      .register-button:hover {
+        background-color: #27ae60;
+      }
 
-        .error {
-            color: red;
-        }
+      #responseMessage {
+        margin-top: 15px;
+        font-size: 14px;
+        padding: 10px;
+        border-radius: 6px;
+        display: none;
+      }
 
-        .success {
-            color: green;
-        }
+      .error {
+        background-color: #ffefef;
+        color: #e74c3c;
+        border: 1px solid #e74c3c;
+      }
+
+      .success {
+        background-color: #eaffef;
+        color: #27ae60;
+        border: 1px solid #27ae60;
+      }
+
+      .error-message {
+        margin-top: -10px;
+        margin-bottom: 10px;
+        font-size: 13px;
+        color: #e74c3c;
+        text-align: left;
+      }
+      .password-toggle {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      .password-toggle input {
+        flex: 1;
+        padding-right: 40px; /* Pour faire de la place à l'icône */
+        
+      }
+
+      .password-toggle .toggle-icon {
+        position: absolute;
+        right: 10px;
+        margin-bottom: 9px;
+        cursor: pointer;
+        font-size: 18px;
+        color: #078351;
+        transition: color 0.3s ease;
+      }
+
+      .password-toggle .toggle-icon:hover {
+        color: #0ce58e;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-<div class="login-container">
-    <h2>Connexion à E-School</h2>
-    <form id="loginForm">
-        <input type="email" id="email" placeholder="E-mail" required>
-        <input type="password" id="password" placeholder="Mot de passe" required>
+  <body>
+    <div class="login-container">
+      <h2>Connexion à My E-School</h2>
+      <form id="loginForm">
+        <input type="email" id="email" placeholder="E-mail" required />
+        <div id="emailError" class="error-message"></div>
+        <div class="password-toggle">
+          <input
+            type="password"
+            id="password"
+            placeholder="Mot de passe"
+            required
+          />
+          <span class="toggle-icon" onclick="togglePasswordVisibility()"
+            >👁️</span
+          >
+        </div>
+
+        <div id="passwordError" class="error-message"></div>
         <button type="submit">Se connecter</button>
-    </form>
-    <div id="responseMessage"></div>
-    <div class="register-container">
-        <button class="register-button" onclick="redirectToRegister()">Créer un compte</button>
+      </form>
+      <div id="responseMessage"></div>
+      <div class="register-container">
+        <button class="register-button" onclick="redirectToRegister()">
+          Créer un compte
+        </button>
+      </div>
     </div>
-</div>
 
-<script>
-    // Configuration Firebase
-    const firebaseConfig = {
+    <script>
+      // Configuration Firebase
+      const firebaseConfig = {
         apiKey: "AIzaSyAlyKqgTUd14IZsO8wGgJ38r0-Ek7bt1Qs",
         authDomain: "education-6748b.firebaseapp.com",
         projectId: "education-6748b",
         storageBucket: "education-6748b.appspot.com",
         messagingSenderId: "821038163536",
         appId: "1:821038163536:web:aafd150866c97460759355",
-        measurementId: "G-X6K0376HC2"
-    };
+        measurementId: "G-X6K0376HC2",
+      };
 
-    // Initialisation Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+      // Initialisation Firebase
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
 
-    // Gestion du formulaire de connexion
-    document.getElementById('loginForm').addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const email = document.getElementById('email').value.trim();
-        const password = document.getElementById('password').value.trim();
-        const responseMessage = document.getElementById('responseMessage');
+      // Gestion du formulaire de connexion
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const email = document.getElementById("email").value.trim();
+          const password = document.getElementById("password").value.trim();
+          const responseMessage = document.getElementById("responseMessage");
+          const emailError = document.getElementById("emailError");
+          const passwordError = document.getElementById("passwordError");
 
-        try {
+          // Réinitialiser les messages d'erreur
+          emailError.textContent = "";
+          passwordError.textContent = "";
+          responseMessage.textContent = "";
+          responseMessage.style.display = "none";
+
+          try {
             // Authentification Firebase
-            const userCredential = await auth.signInWithEmailAndPassword(email, password);
-            const idToken = await userCredential.user.getIdToken();
+            const userCredential = await auth.signInWithEmailAndPassword(
+              email,
+              password
+            );
 
-            // Envoi du token au backend
-            const response = await fetch('http://localhost:8080/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({ idToken }),
+            // Si la connexion réussit, envoyez le token au backend
+            const idToken = await userCredential.user.getIdToken();
+            const response = await fetch("http://localhost:8080/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              body: new URLSearchParams({ idToken }),
             });
 
             if (response.ok) {
-                const userData = await response.json(); // On suppose que le rôle est dans userData.role
-                responseMessage.className = "success";
-                responseMessage.textContent = `Bienvenue, ${userData.firstName}! Connexion réussie.`;
+              const userData = await response.json();
+              responseMessage.className = "success";
+              responseMessage.textContent = `Bienvenue, ${userData.firstName}! Connexion réussie.`;
+              responseMessage.style.display = "block";
 
-                // Redirection basée sur le rôle
+              // Redirection basée sur le rôle
+              setTimeout(() => {
                 if (userData.role === "ETUDIANT") {
-                    window.location.href = "/pages/matieres/matieres.html";
+                  window.location.href = "/pages/matieres/matieres.html";
                 } else if (userData.role === "PROFESSEUR") {
-                    window.location.href = "/pages/matieres/matieresP.html";
-                } else {
-                    responseMessage.className = "error";
-                    responseMessage.textContent = "Rôle inconnu. Contactez l'administrateur.";
+                  window.location.href = "/pages/matieres/matieresP.html";
                 }
+              }, 2000);
             } else {
-                const errorData = await response.text();
-                responseMessage.className = "error";
-                responseMessage.textContent = `Erreur : ${errorData}`;
+              // Erreur retournée par le backend
+              const errorData = await response.text();
+              responseMessage.className = "error";
+              responseMessage.textContent = `Erreur : ${errorData}`;
+              responseMessage.style.display = "block";
             }
-        } catch (error) {
+          } catch (error) {
+            // Gestion des erreurs Firebase
             responseMessage.className = "error";
-            responseMessage.textContent = `Erreur : ${error.message}`;
-        }
-    });
+            responseMessage.style.display = "block";
 
-    // Fonction pour rediriger vers la page d'inscription
-    function redirectToRegister() {
+            switch (error.code) {
+              case "auth/user-not-found":
+                responseMessage.textContent = "Adresse e-mail non trouvée.";
+                break;
+              case "auth/wrong-password":
+                responseMessage.textContent = "Mot de passe incorrect.";
+                break;
+              case "auth/invalid-email":
+                emailError.textContent = "Adresse e-mail invalide.";
+                break;
+              default:
+                responseMessage.textContent =
+                  "Erreur lors de la connexion. Veuillez réessayer.";
+            }
+          }
+        });
+
+      // Redirection vers l'inscription
+      function redirectToRegister() {
         window.location.href = "register.html";
-    }
-</script>
-</body>
+      }
 
+      function togglePasswordVisibility() {
+        const passwordInput = document.getElementById("password");
+        const toggleIcon = document.querySelector(".toggle-icon");
+
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          toggleIcon.textContent = "🙈"; // Icône pour "masquer"
+        } else {
+          passwordInput.type = "password";
+          toggleIcon.textContent = "👁️"; // Icône pour "voir"
+        }
+      }
+    </script>
+  </body>
 </html>
