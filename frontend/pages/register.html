@@ -1,220 +1,198 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My E-School - Inscription</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        font-family: "Istok Web", sans-serif;
-        background: linear-gradient(to bottom right, #0ce58e, #078351);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-      }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My E-School - Inscription</title>
+  <link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: "Istok Web", sans-serif;
+      background: linear-gradient(to bottom right, #0ce58e, #078351);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
 
-      .register-container {
-        background: white;
-        border-radius: 15px;
-        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
-        width: 500px;
-        padding: 40px;
-        text-align: center;
-      }
+    .register-container {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+      width: 500px;
+      padding: 40px;
+      text-align: center;
+    }
 
-      .register-container h1 {
-        font-size: 36px;
-        color: #078351;
-        margin-bottom: 20px;
-      }
+    .register-container h1 {
+      font-size: 36px;
+      color: #078351;
+      margin-bottom: 20px;
+    }
 
-      .input-group {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
-      }
+    .input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
 
-      input[type="text"],
-      input[type="email"],
-      input[type="password"] {
-        width: calc(50% - 5px);
-        padding: 15px;
-        font-size: 16px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        outline: none;
-        transition: border-color 0.3s;
-      }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: calc(50% - 5px);
+      padding: 15px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
 
-      input[type="text"]:focus,
-      input[type="email"]:focus,
-      input[type="password"]:focus {
-        border-color: #078351;
-      }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #078351;
+    }
 
-      input.full-width {
-        width: 100%;
-      }
+    input.full-width {
+      width: 100%;
+    }
 
-      .radio-group {
-        display: flex;
-        justify-content: space-around;
-        margin: 20px 0;
-      }
+    .radio-group {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px 0;
+    }
 
-      .radio-group label {
-        font-size: 16px;
-        color: #078351;
-      }
+    .radio-group label {
+      font-size: 16px;
+      color: #078351;
+    }
 
-      .radio-group input[type="radio"] {
-        margin-right: 5px;
-      }
+    .radio-group input[type="radio"] {
+      margin-right: 5px;
+    }
 
-      button {
-        width: 100%;
-        padding: 15px;
-        background: #078351;
-        color: white;
-        font-size: 18px;
-        font-weight: bold;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background 0.3s;
-      }
+    button {
+      width: 100%;
+      padding: 15px;
+      background: #078351;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
 
-      button:hover {
-        background: #0ce58e;
-      }
+    button:hover {
+      background: #0ce58e;
+    }
 
-      #responseMessage {
-        margin-top: 15px;
-        font-size: 14px;
-      }
+    #responseMessage {
+      margin-top: 15px;
+      font-size: 14px;
+    }
 
-      .success {
-        color: green;
-      }
+    .success {
+      color: green;
+    }
 
-      .error {
-        color: red;
-      }
-    </style>
-  </head>
-
-  <body>
-    <div class="register-container">
-      <h1>Inscription à My E-School</h1>
-      <form id="registerForm">
-        <div class="input-group">
-          <input type="text" id="firstName" placeholder="Nom..." required />
-          <input type="text" id="lastName" placeholder="Prénom..." required />
-        </div>
-        <input
-          type="text"
-          id="username"
-          class="full-width"
-          placeholder="Nom d'utilisateur..."
-          required
-        />
-        <input
-          type="email"
-          id="email"
-          class="full-width"
-          placeholder="E-mail..."
-          required
-        />
-        <input
-          type="password"
-          id="password"
-          class="full-width"
-          placeholder="Mot de passe..."
-          required
-        />
-        <div class="radio-group">
-          <label
-            ><input type="radio" name="role" value="ETUDIANT" checked />
-            Étudiant</label
-          >
-          <label
-            ><input type="radio" name="role" value="PROFESSEUR" />
-            Professeur</label
-          >
-        </div>
-        <button type="submit">S'inscrire</button>
-      </form>
-      <div id="responseMessage"></div>
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+<div class="register-container">
+  <h1>Inscription à My E-School</h1>
+  <form id="registerForm">
+    <div class="input-group">
+      <input type="text" id="firstName" placeholder="Nom..." required>
+      <input type="text" id="lastName" placeholder="Prénom..." required>
     </div>
+    <input type="text" id="username" class="full-width" placeholder="Nom d'utilisateur..." required>
+    <input type="email" id="email" class="full-width" placeholder="E-mail..." required>
+    <input type="password" id="password" class="full-width" placeholder="Mot de passe..." required>
+    <div class="radio-group">
+      <label><input type="radio" name="role" value="ETUDIANT" checked> Étudiant</label>
+      <label><input type="radio" name="role" value="PROFESSEUR"> Professeur</label>
+    </div>
+    <button type="submit">S'inscrire</button>
+  </form>
+  <div id="responseMessage"></div>
+  <div style="margin-top: 20px;">
+    <button
+            onclick="redirectToLogin()"
+            style="
+                    width: 100%;
+                    padding: 15px;
+                    background-color: #2ecc71;
+                    color: white;
+                    font-size: 18px;
+                    font-weight: bold;
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                "
+            onmouseover="this.style.backgroundColor='#27ae60'"
+            onmouseout="this.style.backgroundColor='#2ecc71'"
+    >
+      connexion
+    </button>
+  </div>
+</div>
 
-    <script>
-      // Gestion du formulaire
-      document
-        .getElementById("registerForm")
-        .addEventListener("submit", async (event) => {
-          event.preventDefault(); // Empêcher l'envoi par défaut du formulaire
+<script>
+  // Gestion du formulaire
+  document.getElementById("registerForm").addEventListener("submit", async (event) => {
+    event.preventDefault(); // Empêcher l'envoi par défaut du formulaire
 
-          const firstName = document.getElementById("firstName").value.trim();
-          const lastName = document.getElementById("lastName").value.trim();
-          const username = document.getElementById("username").value.trim();
-          const email = document.getElementById("email").value.trim();
-          const password = document.getElementById("password").value.trim();
-          const role = document.querySelector(
-            'input[name="role"]:checked'
-          ).value;
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName = document.getElementById("lastName").value.trim();
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const role = document.querySelector('input[name="role"]:checked').value;
 
-          const responseMessage = document.getElementById("responseMessage");
+    const responseMessage = document.getElementById("responseMessage");
 
-          // Validation côté frontend
-          if (
-            !firstName ||
-            !lastName ||
-            !username ||
-            !email ||
-            !password ||
-            !role
-          ) {
-            responseMessage.className = "error";
-            responseMessage.textContent = "Tous les champs sont requis.";
-            return;
-          }
+    // Validation côté frontend
+    if (!firstName || !lastName || !username || !email || !password || !role) {
+      responseMessage.className = "error";
+      responseMessage.textContent = "Tous les champs sont requis.";
+      return;
+    }
 
-          try {
-            const response = await fetch("http://localhost:8080/register", {
-              method: "POST",
-              headers: { "Content-Type": "application/x-www-form-urlencoded" },
-              body: new URLSearchParams({
-                firstName,
-                lastName,
-                username,
-                email,
-                password,
-                role,
-              }),
-            });
+    try {
+      const response = await fetch("http://localhost:8080/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ firstName, lastName, username, email, password, role }),
+      });
 
-            if (response.ok) {
-              const data = await response.json();
-              responseMessage.className = "success";
-              responseMessage.textContent = `Inscription réussie pour ${data.firstName} ${data.lastName}!`;
-            } else {
-              const errorData = await response.json();
-              responseMessage.className = "error";
-              responseMessage.textContent = `Erreur : ${
-                errorData.message || "Problème lors de l'inscription"
-              }`;
-            }
-          } catch (error) {
-            responseMessage.className = "error";
-            responseMessage.textContent = `Erreur réseau : ${error.message}`;
-          }
-        });
-    </script>
-  </body>
+      if (response.ok) {
+        const data = await response.json();
+        responseMessage.className = "success";
+        responseMessage.textContent = `Inscription réussie pour ${data.firstName} ${data.lastName}!`;
+      } else {
+        const errorData = await response.json();
+        responseMessage.className = "error";
+        responseMessage.textContent = `Erreur : ${errorData.message || "Problème lors de l'inscription"}`;
+      }
+    } catch (error) {
+      responseMessage.className = "error";
+      responseMessage.textContent = `Erreur réseau : ${error.message}`;
+    }
+  });
+
+  // Fonction pour rediriger vers la page de connexion
+  function redirectToLogin() {
+    window.location.href = "login.html";
+  }
+</script>
+</body>
 </html>
