@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("blob")
-@CrossOrigin(origins = "*") // Allow requests from any origin
+@CrossOrigin(origins = "http://127.0.0.1:5500/") // Allow requests from any origin
 public class BlobStorageController {
 
     // Inject Azure Blob Storage credentials
