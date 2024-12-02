@@ -1,249 +1,251 @@
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My E-School - Mes Matières</title>
-    <link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        /* Style général */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-weight: bold;
-        }
+      /* Style général */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-weight: bold;
+      }
 
-        body {
-            font-family: 'Istok Web', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            flex-direction: column;
-            background-color: #f9f9f9;
-        }
+      body {
+        font-family: "Istok Web", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        flex-direction: column;
+        background-color: #f9f9f9;
+      }
 
-        /* En-tête */
-        .header {
-            background-color: #0CE58E;
-            width: 100%;
-            padding: 20px;
-            text-align: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
-        }
+      /* En-tête */
+      .header {
+        background-color: #0ce58e;
+        width: 100%;
+        padding: 20px;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+      }
 
-        .title {
-            font-size: 24px;
-            margin: 0;
-        }
+      .title {
+        font-size: 24px;
+        margin: 0;
+      }
 
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
 
-        .logout-btn {
-            background-color: white;
-            color: #078351;
-            border: none;
-            padding: 10px 15px;
-            font-size: 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+      .logout-btn {
+        background-color: white;
+        color: #078351;
+        border: none;
+        padding: 10px 15px;
+        font-size: 14px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
 
-        .logout-btn:hover {
-            background-color: #d9f6e5;
-        }
+      .logout-btn:hover {
+        background-color: #d9f6e5;
+      }
 
-        /* Conteneur principal */
-        .main-container {
-            text-align: center;
-            margin-top: 120px;
-        }
+      /* Conteneur principal */
+      .main-container {
+        text-align: center;
+        margin-top: 120px;
+      }
 
-        .main-container h3 {
-            font-size: 40px;
-            margin-bottom: 50px;
-        }
+      .main-container h3 {
+        font-size: 40px;
+        margin-bottom: 50px;
+      }
 
-        /* Conteneur des matières */
-        .subjects-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+      /* Conteneur des matières */
+      .subjects-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
 
-        /* Style des matières */
-        .subject {
-            background-color: #0CE58E;
-            padding: 20px;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            gap: 20px;
-        }
+      /* Style des matières */
+      .subject {
+        background-color: #0ce58e;
+        padding: 20px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        gap: 20px;
+      }
 
-        .subject h4 {
-            color: white;
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
+      .subject h4 {
+        color: white;
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
 
-        /* Boutons */
-        .subject button {
-            background-color: white;
-            color: #078351;
-            border: none;
-            padding: 15px 20px;
-            font-size: 16px;
-            border-radius: 8px;
-            width: 100%;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
+      /* Boutons */
+      .subject button {
+        background-color: white;
+        color: #078351;
+        border: none;
+        padding: 15px 20px;
+        font-size: 16px;
+        border-radius: 8px;
+        width: 100%;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
 
-        .subject button:hover {
-            background-color: #d9f6e5;
-            transform: scale(1.05);
-        }
+      .subject button:hover {
+        background-color: #d9f6e5;
+        transform: scale(1.05);
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <!-- En-tête -->
     <!-- En-tête -->
     <header class="header">
-        <h1 class="title">My E-School</h1>
-        <div class="user-info">
-            <span id="userName">Bonjour, Utilisateur !</span>
-            <button class="logout-btn" onclick="logout()">Déconnexion</button>
-        </div>
+      <h1 class="title">My E-School</h1>
+      <div class="user-info">
+        <span id="userName">Bonjour, Utilisateur !</span>
+        <button class="logout-btn" onclick="logout()">Déconnexion</button>
+      </div>
     </header>
 
     <!-- Conteneur principal -->
     <div class="main-container">
-        <h3>Mes matières</h3>
+      <h3>Mes matières</h3>
 
-        <!-- Conteneur des matières -->
-        <div class="subjects-container" id="subjects-container">
-            <!-- Les matières seront générées dynamiquement ici -->
-        </div>
-
+      <!-- Conteneur des matières -->
+      <div class="subjects-container" id="subjects-container">
+        <!-- Les matières seront générées dynamiquement ici -->
+      </div>
     </div>
 
     <script>
-        // Vérification de la connexion de l'utilisateur
+      // Vérification de la connexion de l'utilisateur
+      const firebaseUid = localStorage.getItem("firebaseUid");
+
+      // Fonction pour récupérer les informations de l'utilisateur depuis l'API
+      async function fetchUserDetails() {
         const firebaseUid = localStorage.getItem("firebaseUid");
 
-        // Fonction pour récupérer les informations de l'utilisateur depuis l'API
-        async function fetchUserDetails() {
-            const firebaseUid = localStorage.getItem("firebaseUid");
-
-            if (!firebaseUid) {
-                console.error("Aucun utilisateur connecté.");
-                alert("Veuillez vous connecter pour accéder à cette page.");
-                window.location.href = "/pages/login.html"; // Redirige vers la page de connexion si l'utilisateur n'est pas connecté
-
-            }
-
-            try {
-                const response = await fetch(`http://localhost:8080/${firebaseUid}`); // URL de votre API
-                if (response.ok) {
-                    const user = await response.json();
-                    document.getElementById("userName").textContent = `Bonjour professeur, ${user.firstName} ${user.lastName} !`;
-                } else {
-                    console.error("Professeur non trouvé");
-                    document.getElementById("userName").textContent = "Bonjour, professeur inconnu !";
-                }
-            } catch (error) {
-                console.error("Erreur réseau : ", error);
-                document.getElementById("userName").textContent = "Bonjour, professeur inconnu !";
-            }
+        if (!firebaseUid) {
+          // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
+          alert("Veuillez vous connecter pour accéder à cette page.");
+          window.location.href = "../login.html"; // Redirection vers la page de connexion
         }
 
-        // Appeler la fonction pour récupérer les données de l'utilisateur
-        fetchUserDetails();
-
-        // Fonction de déconnexion
-        function logout() {
-            // Retirer les données de l'utilisateur du localStorage
-            localStorage.removeItem("firebaseUid");
-            localStorage.removeItem("firstName");
-            localStorage.removeItem("lastName");
-            // Rediriger vers la page de connexion
-            window.location.href = "/pages/login.html";
+        try {
+          const response = await fetch(`http://localhost:8080/${firebaseUid}`); // URL de votre API
+          if (response.ok) {
+            const user = await response.json();
+            document.getElementById(
+              "userName"
+            ).textContent = `Bonjour professeur, ${user.firstName} ${user.lastName} !`;
+          } else {
+            console.error("Professeur non trouvé");
+            document.getElementById("userName").textContent =
+              "Bonjour, professeur inconnu !";
+          }
+        } catch (error) {
+          console.error("Erreur réseau : ", error);
+          document.getElementById("userName").textContent =
+            "Bonjour, professeur inconnu !";
         }
+      }
 
-        // Données des matières (peuvent être récupérées dynamiquement via API)
-        const subjects = [
-            {
-                name: "Python",
-                links: {
-                    cours: "../cours/cours pythonP.html",
-                    tds: "../TDsTPs/TDPs PythonP.html",
-                    projets: "../projets/ProjetPythonP.html"
-                }
-            },
-            {
-                name: "Cloud Computing",
-                links: {
-                    cours: "../cours/cours CCP.html",
-                    tds: "../TDsTPs/TDPs CCP.html",
-                    projets: "../projets/ProjetCCP.html"
-                }
-            },
-            // Ajouter d'autres matières ici si nécessaire
+      // Appeler la fonction pour récupérer les données de l'utilisateur
+      fetchUserDetails();
+
+      // Fonction de déconnexion
+      function logout() {
+        // Retirer les données de l'utilisateur du localStorage
+        localStorage.removeItem("firebaseUid");
+        localStorage.removeItem("firstName");
+        localStorage.removeItem("lastName");
+        // Rediriger vers la page de connexion
+        window.location.href = "/pages/login.html";
+      }
+
+      // Données des matières (peuvent être récupérées dynamiquement via API)
+      const subjects = [
+        {
+          name: "Python",
+          links: {
+            cours: "../cours/cours pythonP.html",
+            tds: "../TDsTPs/TDPs PythonP.html",
+            projets: "../projets/ProjetPythonP.html",
+          },
+        },
+        {
+          name: "Cloud Computing",
+          links: {
+            cours: "../cours/cours CCP.html",
+            tds: "../TDsTPs/TDPs CCP.html",
+            projets: "../projets/ProjetCCP.html",
+          },
+        },
+        // Ajouter d'autres matières ici si nécessaire
+      ];
+
+      // Fonction pour rediriger
+      function redirectTo(page) {
+        window.location.href = page;
+      }
+
+      // Génération dynamique des matières
+      const container = document.getElementById("subjects-container");
+
+      subjects.forEach((subject) => {
+        const subjectDiv = document.createElement("div");
+        subjectDiv.className = "subject";
+
+        const subjectTitle = document.createElement("h4");
+        subjectTitle.textContent = subject.name;
+        subjectDiv.appendChild(subjectTitle);
+
+        const buttons = [
+          { label: "mes cours", link: subject.links.cours },
+          { label: "mes TDs/TPs", link: subject.links.tds },
+          { label: "Projet à faire", link: subject.links.projets },
         ];
 
-        // Fonction pour rediriger
-        function redirectTo(page) {
-            window.location.href = page;
-        }
-
-        // Génération dynamique des matières
-        const container = document.getElementById("subjects-container");
-
-        subjects.forEach((subject) => {
-            const subjectDiv = document.createElement("div");
-            subjectDiv.className = "subject";
-
-            const subjectTitle = document.createElement("h4");
-            subjectTitle.textContent = subject.name;
-            subjectDiv.appendChild(subjectTitle);
-
-            const buttons = [
-                { label: "mes cours", link: subject.links.cours },
-                { label: "mes TDs/TPs", link: subject.links.tds },
-                { label: "Projet à faire", link: subject.links.projets }
-            ];
-
-            buttons.forEach((btn) => {
-                const button = document.createElement("button");
-                button.textContent = btn.label;
-                button.onclick = () => redirectTo(btn.link);
-                subjectDiv.appendChild(button);
-            });
-
-            container.appendChild(subjectDiv);
+        buttons.forEach((btn) => {
+          const button = document.createElement("button");
+          button.textContent = btn.label;
+          button.onclick = () => redirectTo(btn.link);
+          subjectDiv.appendChild(button);
         });
-    </script>
-</body>
 
+        container.appendChild(subjectDiv);
+      });
+    </script>
+  </body>
 </html>
