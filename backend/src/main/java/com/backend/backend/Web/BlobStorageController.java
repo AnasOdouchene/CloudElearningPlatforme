@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("blob")
-@CrossOrigin(origins = "http://127.0.0.1:5500/") // Allow requests from any origin
+@CrossOrigin(origins = "http://localhost:8081")
 public class BlobStorageController {
 
     @Autowired
