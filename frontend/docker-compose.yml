@@ -1,0 +1,7 @@
+services:
+  frontend:
+    build:
+      context: . # Construire à partir du répertoire actuel (frontend)
+      dockerfile: Dockerfile
+    ports:
+      - "80:80" # Redirige le port 80 du conteneur vers le port 80 local
