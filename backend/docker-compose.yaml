@@ -1,3 +1,9 @@
+networks:
+  postgres_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.1.0/24
 services:
   postgres:
     image: postgres:latest
@@ -8,3 +14,21 @@ services:
       - POSTGRES_USER=user  # Nom d'utilisateur
     ports:
       - '5432'  # Expose PostgreSQL sur le port 5432
+    networks:
+      postgres_network:
+        ipv4_address: 192.168.1.100
+
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com # Email de connexion
+      PGADMIN_DEFAULT_PASSWORD: admin       # Mot de passe de connexion
+    ports:
+      - "5050:80" # Accès à pgAdmin sur le port 5050
+    depends_on:
+      - postgres
+    networks:
+        postgres_network:
+          ipv4_address: 192.168.1.101
