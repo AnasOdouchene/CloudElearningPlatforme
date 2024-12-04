@@ -1,7 +1,9 @@
+version: '3.8'
+
 services:
   frontend:
     build:
-      context: . # Construire à partir du répertoire actuel (frontend)
+      context: . # Indique que Dockerfile est dans ce répertoire
       dockerfile: Dockerfile
     ports:
-      - "80:80" # Redirige le port 80 du conteneur vers le port 80 local
+      - "8081:80" # Redirige le port 80 du conteneur vers le port 8081 sur votre machine
