@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres-container
+    environment:
+      - POSTGRES_DB=EschoolDB  # Nom de la base de données
+      - POSTGRES_PASSWORD=root  # Mot de passe
+      - POSTGRES_USER=user  # Nom d'utilisateur
+    ports:
+      - '5432'  # Expose PostgreSQL sur le port 5432
